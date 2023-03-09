@@ -3,7 +3,7 @@ import os
 from flask import Flask
 from app.main import bp as main_bp
 from app.nodes import bp as node_bp
-
+from app.data import bp as data_bp
 
 def create_app(test_config=None):
     # create and configure the app
@@ -32,5 +32,6 @@ def create_app(test_config=None):
 
     app.register_blueprint(main_bp)
     app.register_blueprint(node_bp)
+    app.register_blueprint(data_bp)
 
     return app
