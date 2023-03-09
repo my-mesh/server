@@ -29,7 +29,10 @@ def post():
     db = get_db()
 
     try:
-        db.execute("INSERT INTO node (type) VALUES (?)", ("Test",))
+        db.execute(
+            "INSERT INTO node (type) VALUES (?)",
+            ("Test",),
+        )
         db.commit()
     except db.Error as e:
         print(e)
