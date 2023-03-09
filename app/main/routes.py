@@ -9,12 +9,10 @@ def index():
     db = get_db()
 
     try:
-        db.execute(
-            "INSERT INTO user (username, password) VALUES ('Test', 123)",
-        )
-        db.commit()
-    except db.IntegrityError:
-        error = f"User is already registered."
+        rows = db.execute(
+            "SELECT node_id, created, type FROM node"
+        ).fetchall()
+    except db.Error as e:
+        print(e)
 
-    print(db)
-    return render_template("/pages/main.html", page="dashboard")
+    return render_template("/pages/main.html", page="dashboard", devices=rows)

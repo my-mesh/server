@@ -1,0 +1,20 @@
+{% macro Table(headings, list) -%}
+<table class="table">
+  <thead>
+    <tr>
+      {% for element in headings %}
+      <th>{{element}}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for element in list %}
+    <tr>
+      {% for value in element %}
+      <td>{{value}}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{%- endmacro %}

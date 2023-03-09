@@ -23,7 +23,14 @@
 .body {
   display: grid;
   grid-template-columns: 0.15fr 1fr;
+}
+
+.main {
   background-color: var(--stone-2);
+  padding: var(--size-fluid-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-fluid-3);
 }
 
 .navigation {
@@ -72,4 +79,37 @@
 
 .navigation a:hover {
   background-color: var(--stone-3);
+}
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  font-weight: normal;
+}
+
+.table th {
+  text-align: start;
+  padding: var(--size-2);
+  vertical-align: top;
+}
+
+.table thead tr {
+  border-block-end: var(--border-size-1) solid var(--surface-3);
+}
+
+.table tbody tr:not(:last-child) {
+  border-block-end: var(--border-size-1) solid var(--surface-3);
+}
+
+.table td {
+  padding: var(--size-2);
+}
+
+.card {
+  background-color: var(--gray-1);
+  padding: var(--size-fluid-1);
+  display: flex;
+  flex-direction: column;
+  border: var(--border-size-1) solid var(--gray-4);
+  border-radius: var(--radius-2);
 }

@@ -1,3 +1,5 @@
+{% from "/components/table.html" import Table %}
+
 {% extends "base.html" %}
 {% block title %}Index{% endblock %}
 {% block content %}
@@ -12,4 +14,8 @@
     <h2>Data</h2>
     <button>Submit</button>
   </form>
+
+  <div class="card">
+    {{Table(["ID", "Created", "Type"], devices)}}
+  </div>
 {% endblock %}
