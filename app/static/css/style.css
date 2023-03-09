@@ -170,7 +170,7 @@
   pointer-events: all;
 }
 
-.table tr:hover {
+.table tbody tr:hover {
   background-color: var(--stone-3);
 }
 
