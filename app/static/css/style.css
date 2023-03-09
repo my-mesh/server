@@ -19,41 +19,17 @@
   line-height: var(--font-lineheight-3);
   scrollbar-color: var(--scrollthumb-color) transparent;
 }
-@media (dynamic-range: high) {
-  @supports (color: color(display-p3 0 0 0)) {
-    :where(html) {
-      --link: color(display-p3 0.1 0.4 1);
-      --link-visited: color(display-p3 0.6 0.2 1);
-    }
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :where(html) {
-    --link: var(--indigo-3);
-    --link-visited: var(--purple-3);
-    --text-1: var(--gray-1);
-    --text-2: var(--gray-4);
-    --surface-1: var(--gray-9);
-    --surface-2: var(--gray-8);
-    --surface-3: var(--gray-7);
-    --surface-4: var(--gray-6);
-    --scrollthumb-color: var(--gray-6);
-    --shadow-strength: 10%;
-    --shadow-color: 220 40% 2%;
-    color-scheme: dark;
-  }
-}
 
 .body {
   display: grid;
   grid-template-columns: 0.15fr 1fr;
-  background-color: var(--gray-1);
+  background-color: var(--stone-2);
 }
 
 .navigation {
-  background-color: var(--surface-1);
-  box-shadow: var(--shadow-3);
+  background-color: var(--gray-1);
+  border-inline-end: var(--border-size-1) solid var(--gray-4);
+  box-shadow: var(--shadow-1);
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -65,7 +41,6 @@
 }
 
 .navigation .logo {
-  align-self: center;
   font-size: var(--font-size-4);
 }
 
@@ -84,13 +59,17 @@
   padding-inline: var(--size-2);
   padding-block: var(--size-2);
   border-radius: var(--radius-2);
-  color: inherit;
+  color: var(--text-2);
   text-decoration: none;
   font-size: var(--font-size-2);
+  font-weight: 600;
 }
 
 .navigation .active {
-  background-color: var(--surface-2);
-  box-shadow: var(--shadow-2);
-  color: var(--gray-1);
+  background-color: var(--stone-3);
+  color: var(--blue-9);
+}
+
+.navigation a:hover {
+  background-color: var(--stone-3);
 }
