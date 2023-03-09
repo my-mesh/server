@@ -1,7 +1,7 @@
 {% from "/components/input.html" import Input %}
 
 {% macro Table(headings, list) -%}
-<div>
+<div class="table--container">
   <header>
     {{Input("text", "", "Suche ...", "search")}}
   </header>
