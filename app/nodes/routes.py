@@ -10,10 +10,8 @@ def index():
 
     try:
         rows = db.execute("SELECT id, created, type, active FROM node").fetchall()
-    except db.IntegrityError:
-        pass
-    except db.OperationalError:
-        pass
+    except db.Error as e:
+        print(e)
 
     for row in rows:
         node = {}
@@ -32,9 +30,8 @@ def post():
 
     try:
         db.execute("INSERT INTO node (type) VALUES (?)", ("Test",))
-    except db.IntegrityError as e:
-        print(e)
-    except db.OperationalError as e:
+        db.commit()
+    except db.Error as e:
         print(e)
 
     return jsonify([])
