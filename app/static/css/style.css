@@ -1,0 +1,57 @@
+:where(html) {
+  --link: var(--indigo-7);
+  --link-visited: var(--purple-7);
+  --text-1: var(--gray-9);
+  --text-2: var(--gray-7);
+  --surface-1: var(--gray-0);
+  --surface-2: var(--gray-2);
+  --surface-3: var(--gray-3);
+  --surface-4: var(--gray-4);
+  --scrollthumb-color: var(--gray-7);
+  -webkit-text-size-adjust: none;
+  accent-color: var(--brand, var(--link));
+  background-color: var(--surface-1);
+  block-size: 100%;
+  caret-color: var(--brand, var(--link));
+  color: var(--text-2);
+  color-scheme: light;
+  font-family: var(--font-sans);
+  line-height: var(--font-lineheight-3);
+  scrollbar-color: var(--scrollthumb-color) transparent;
+}
+@media (dynamic-range: high) {
+  @supports (color: color(display-p3 0 0 0)) {
+    :where(html) {
+      --link: color(display-p3 0.1 0.4 1);
+      --link-visited: color(display-p3 0.6 0.2 1);
+    }
+  }
+}
+@media (prefers-color-scheme: dark) {
+  :where(html) {
+    --link: var(--indigo-3);
+    --link-visited: var(--purple-3);
+    --text-1: var(--gray-1);
+    --text-2: var(--gray-4);
+    --surface-1: var(--gray-9);
+    --surface-2: var(--gray-8);
+    --surface-3: var(--gray-7);
+    --surface-4: var(--gray-6);
+    --scrollthumb-color: var(--gray-6);
+    --shadow-strength: 10%;
+    --shadow-color: 220 40% 2%;
+    color-scheme: dark;
+  }
+}
+:where(h1, h2, h3, h4, h5, h6, dt) {
+  color: var(--text-1);
+}
+:where(a[href]) {
+  color: var(--brand, var(--link));
+}
+:where(a[href]):visited {
+  color: var(--link-visited);
+}
+:focus-visible {
+  outline-color: var(--brand, var(--link));
+}
