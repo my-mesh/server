@@ -22,7 +22,7 @@
 
 .body {
   display: grid;
-  grid-template-columns: 0.15fr 1fr;
+  grid-template-columns: auto 1fr;
 }
 
 .main {
@@ -34,6 +34,7 @@
 }
 
 .navigation {
+  width: 15rem;
   background-color: var(--gray-1);
   border-inline-end: var(--border-size-1) solid var(--gray-4);
   box-shadow: var(--shadow-1);
@@ -45,9 +46,26 @@
   top: 0;
   gap: var(--size-fluid-3);
   padding: var(--size-fluid-1);
+  position: relative;
 }
 
 .navigation .logo {
+  display: flex;
+  align-items: center;
+  gap: var(--size-2);
+}
+
+.navigation .logo h1 {
+  font-size: var(--font-size-4);
+}
+
+.navigation .logo .art {
+  display: flex;
+  width: var(--size-7);
+  height: var(--size-7);
+  background-color: var(--blue-9);
+  border-radius: var(--radius-2);
+  aspect-ratio: 1;
   font-size: var(--font-size-4);
 }
 
@@ -81,6 +99,25 @@
   background-color: var(--stone-3);
 }
 
+.navigation.collapsed {
+  transition: width 0.2s ease-in;
+  width: 5rem;
+}
+
+.navigation.collapsed .logo h1 {
+  display: none;
+}
+
+.navigation.collapsed a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navigation.collapsed a span {
+  display: none;
+}
+
 .table {
   border-collapse: collapse;
   width: 100%;
@@ -112,4 +149,19 @@
   flex-direction: column;
   border: var(--border-size-1) solid var(--gray-4);
   border-radius: var(--radius-2);
+}
+
+#collapse {
+  position: absolute;
+  right: 0;
+  transform: translateX(50%);
+  border: none;
+  height: var(--size-6);
+  aspect-ratio: 1;
+  background-color: var(--stone-4);
+  border-radius: var(--radius-round);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--border-size-1) solid var(--gray-4);
 }
