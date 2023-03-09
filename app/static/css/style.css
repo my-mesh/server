@@ -144,8 +144,34 @@
   border-block-end: var(--border-size-1) solid var(--surface-3);
 }
 
+.table tr {
+  position: relative;
+}
+
 .table td {
   padding: var(--size-2);
+  padding-block: var(--size-3);
+}
+
+.table .link {
+  padding: 0;
+  width: 0;
+  height: 0;
+}
+
+.table .link a::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.table .link.active a::before {
+  pointer-events: all;
+}
+
+.table tr:hover {
+  background-color: var(--stone-3);
 }
 
 .card {

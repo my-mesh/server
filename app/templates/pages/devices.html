@@ -1,0 +1,9 @@
+{% from "/components/table.html" import Table %}
+
+{% extends "base.html" %}
+{% block title %}Devices{% endblock %}
+{% block content %}
+  <div class="card">
+    {{Table(["ID", "Created", "Type"], devices, True)}}
+  </div>
+{% endblock %}

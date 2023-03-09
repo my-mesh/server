@@ -1,6 +1,6 @@
 {% from "/components/input.html" import Input %}
 
-{% macro Table(headings, list) -%}
+{% macro Table(headings, list, link) -%}
 <div class="table--container">
   <header>
     {{Input("text", "", "Suche ...", "search")}}
@@ -16,9 +16,13 @@
     <tbody id="tbody">
       {% for element in list %}
       <tr>
-        {% for value in element %}
+      {% for key, value in element.items() %}
+      {% if key == "link" %}
+      <td class="link {% if link %} active {% endif %}"><a href="{{value}}"></a></td>
+        {% else %}
         <td>{{value}}</td>
-        {% endfor %}
+      {% endif %}
+      {% endfor %} 
       </tr>
       {% endfor %}
     </tbody>

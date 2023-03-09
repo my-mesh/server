@@ -3,7 +3,7 @@ from app.nodes import bp
 from app.db import get_db
 
 
-@bp.get("/nodes")
+@bp.get("/nodes/")
 def index():
     db = get_db()
     nodes = []
@@ -24,7 +24,7 @@ def index():
     return jsonify(nodes)
 
 
-@bp.post("/nodes")
+@bp.post("/nodes/")
 def post():
     db = get_db()
 
