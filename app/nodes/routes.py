@@ -1,4 +1,4 @@
-from flask import render_template, jsonify
+from flask import jsonify
 from app.nodes import bp
 from app.db import get_db
 
@@ -9,7 +9,7 @@ def index():
     nodes = []
 
     try:
-        rows = db.execute("SELECT id, username, password FROM user").fetchall()
+        rows = db.execute("SELECT id, created, type, active FROM node").fetchall()
     except db.IntegrityError:
         pass
     except db.OperationalError:
@@ -18,8 +18,9 @@ def index():
     for row in rows:
         node = {}
         node["id"] = row["id"]
-        node["username"] = row["username"]
-        node["password"] = row["password"]
+        node["created"] = row["created"]
+        node["type"] = row["type"]
+        node["active"] = row["active"]
         nodes.append(node)
 
     return jsonify(nodes)
@@ -30,9 +31,10 @@ def post():
     db = get_db()
 
     try:
-        db.execute("INSERT INTO user (username, password) VALUES ('ab', 453)")
-    except db.IntegrityError:
-        print("error")
-    except db.OperationalError:
-        print("errror")
-    return render_template("/base.html", page="node")
+        db.execute("INSERT INTO node (type) VALUES (?)", ("Test",))
+    except db.IntegrityError as e:
+        print(e)
+    except db.OperationalError as e:
+        print(e)
+
+    return jsonify([])
