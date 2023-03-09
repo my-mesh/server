@@ -1,3 +1,5 @@
+{% from "/components/navigation.html" import Navigation %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +9,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/props.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <title>Document</title>
+    <title>{% block title %}{% endblock %}</title>
 </head>
-<body>
-    Test
+<body class="body">
+    {{Navigation(page)}}
+    {% block content %}
+    {% endblock %}
 </body>
 </html>

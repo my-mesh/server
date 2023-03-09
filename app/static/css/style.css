@@ -27,6 +27,7 @@
     }
   }
 }
+
 @media (prefers-color-scheme: dark) {
   :where(html) {
     --link: var(--indigo-3);
@@ -43,15 +44,53 @@
     color-scheme: dark;
   }
 }
-:where(h1, h2, h3, h4, h5, h6, dt) {
-  color: var(--text-1);
+
+.body {
+  display: grid;
+  grid-template-columns: 0.15fr 1fr;
+  background-color: var(--gray-1);
 }
-:where(a[href]) {
-  color: var(--brand, var(--link));
+
+.navigation {
+  background-color: var(--surface-1);
+  box-shadow: var(--shadow-3);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  gap: var(--size-fluid-3);
+  padding: var(--size-fluid-1);
 }
-:where(a[href]):visited {
-  color: var(--link-visited);
+
+.navigation .logo {
+  align-self: center;
+  font-size: var(--font-size-4);
 }
-:focus-visible {
-  outline-color: var(--brand, var(--link));
+
+.navigation ul {
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-fluid-2);
+}
+
+.navigation li a {
+  display: flex;
+  align-items: center;
+  gap: var(--size-3);
+  padding-inline: var(--size-2);
+  padding-block: var(--size-2);
+  border-radius: var(--radius-2);
+  color: inherit;
+  text-decoration: none;
+  font-size: var(--font-size-2);
+}
+
+.navigation .active {
+  background-color: var(--surface-2);
+  box-shadow: var(--shadow-2);
+  color: var(--gray-1);
 }
