@@ -47,6 +47,6 @@ def create_app(test_config=None):
     app.register_blueprint(data_bp)
     app.register_blueprint(devices_bp)
 
-    threading.Thread(target=mesh_master, daemon=True).start()
+    #threading.Thread(target=mesh_master, daemon=True).start()
 
     return app

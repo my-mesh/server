@@ -44,9 +44,9 @@
   height: 100vh;
   position: sticky;
   top: 0;
+  align-self: start;
   gap: var(--size-fluid-3);
   padding: var(--size-fluid-1);
-  position: relative;
 }
 
 .navigation .logo {
