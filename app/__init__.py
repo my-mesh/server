@@ -1,10 +1,23 @@
 import os
+import threading
+import time
 
 from flask import Flask
 from app.main import bp as main_bp
 from app.nodes import bp as node_bp
 from app.devices import bp as devices_bp
 from app.data import bp as data_bp
+
+from . import db
+from .mesh import mesh_master
+
+
+def worker():
+    print("yes")
+    while True:
+        time.sleep(1)
+        print("counter")
+
 
 def create_app(test_config=None):
     # create and configure the app
@@ -27,13 +40,13 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    from . import db
-
     db.init_app(app)
 
     app.register_blueprint(main_bp)
     app.register_blueprint(node_bp)
     app.register_blueprint(data_bp)
     app.register_blueprint(devices_bp)
+
+    threading.Thread(target=mesh_master, daemon=True).start()
 
     return app
