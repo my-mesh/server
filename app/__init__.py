@@ -1,5 +1,8 @@
+import logging
 import os
+import signal
 import threading
+import atexit
 import time
 
 from flask import Flask
@@ -8,15 +11,19 @@ from app.nodes import bp as node_bp
 from app.devices import bp as devices_bp
 from app.data import bp as data_bp
 
+from .mesh import BackgroundThreadFactory
 from . import db
-from .mesh import mesh_master
 
 
-def worker():
-    print("yes")
-    while True:
+def stop_background():
+    print("stop event")
+
+
+def task(test):
+    while not test.is_set():
         time.sleep(1)
-        print("counter")
+        print("yes")
+    print("end")
 
 
 def create_app(test_config=None):
@@ -47,6 +54,22 @@ def create_app(test_config=None):
     app.register_blueprint(data_bp)
     app.register_blueprint(devices_bp)
 
-    #threading.Thread(target=mesh_master, daemon=True).start()
+    notification_thread = BackgroundThreadFactory.create("notification")
+    notification_thread.start()
+
+    original_handler = signal.getsignal(signal.SIGINT)
+
+    def sigint_handler(signum, frame):
+        notification_thread.stop()
+
+        if notification_thread.is_alive():
+            notification_thread.join()
+
+        original_handler(signum, frame)
+
+    try:
+        signal.signal(signal.SIGINT, sigint_handler)
+    except ValueError as e:
+        logging.error(f"{e}. Continuing execution...")
 
     return app
