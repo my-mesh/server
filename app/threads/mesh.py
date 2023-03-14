@@ -11,11 +11,11 @@ class MeshThread(BackgroundThread):
 
         if not self.mesh.begin():
             raise OSError("Radio hardware not responding.")
-        print("NotificationThread started")
+        print("Mesh started")
 
     def shutdown(self) -> None:
         self.power = False
-        print("NotificationThread stopped")
+        print("Mesh stopped")
 
     def handle(self) -> None:
         while True:
