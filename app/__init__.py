@@ -1,30 +1,15 @@
 import logging
 import os
 import signal
-import threading
-import atexit
-import time
 
 from flask import Flask
-from app.main import bp as main_bp
-from app.nodes import bp as node_bp
-from app.devices import bp as devices_bp
-from app.data import bp as data_bp
+from app.routes.main import bp as main_bp
+from app.routes.nodes import bp as node_bp
+from app.routes.devices import bp as devices_bp
+from app.routes.data import bp as data_bp
 
 from .mesh import BackgroundThreadFactory
 from . import db
-
-
-def stop_background():
-    print("stop event")
-
-
-def task(test):
-    while not test.is_set():
-        time.sleep(1)
-        print("yes")
-    print("end")
-
 
 def create_app(test_config=None):
     # create and configure the app

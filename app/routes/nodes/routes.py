@@ -1,5 +1,5 @@
 from flask import jsonify, redirect, request
-from app.nodes import bp
+from app.routes.nodes import bp
 from app.db import get_db
 
 

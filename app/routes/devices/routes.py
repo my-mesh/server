@@ -1,5 +1,5 @@
 from flask import render_template, redirect, request
-from app.devices import bp
+from app.routes.devices import bp
 from app.db import get_db
 
 
@@ -21,7 +21,6 @@ def get_devices():
         node["link"] = f"/devices/{node['node_id']}"
         nodes.append(node)
 
-    print(nodes)
     return render_template("/pages/devices.html", page="devices", devices=nodes)
 
 

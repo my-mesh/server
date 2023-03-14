@@ -1,11 +1,12 @@
 from flask import render_template
-from app.main import bp
+from app.routes.main import bp
 
 from app.db import get_db
 
 
 @bp.route("/")
 def index():
+    print("2")
     db = get_db()
     devices = []
 

@@ -2,4 +2,4 @@ from flask import Blueprint
 
 bp = Blueprint('data', __name__)
 
-from app.data import routes
+from app.routes.data import routes
