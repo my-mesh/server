@@ -1,5 +1,4 @@
 import threading
-import time
 from queue import Queue
 from abc import abstractmethod, ABC
 
@@ -54,26 +53,3 @@ class BackgroundThread(threading.Thread, ABC):
         while not self._stopped():
             self.handle()
         self.shutdown()
-
-
-class NotificationThread(BackgroundThread):
-    def startup(self) -> None:
-        self.x = 2
-        print("NotificationThread started")
-
-    def shutdown(self) -> None:
-        print("NotificationThread stopped")
-
-    def handle(self) -> None:
-        print(self.x)
-        print("yes")
-        time.sleep(1)
-
-
-class BackgroundThreadFactory:
-    @staticmethod
-    def create(thread_type: str) -> BackgroundThread:
-        if thread_type == "notification":
-            return NotificationThread()
-
-        raise NotImplementedError("Specified thread type is not implemented.")

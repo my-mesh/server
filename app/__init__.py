@@ -8,7 +8,8 @@ from app.routes.nodes import bp as node_bp
 from app.routes.devices import bp as devices_bp
 from app.routes.data import bp as data_bp
 
-from .mesh import BackgroundThreadFactory
+from app.threads.factory import BackgroundThreadFactory
+
 from . import db
 
 def create_app(test_config=None):
