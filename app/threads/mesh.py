@@ -18,10 +18,9 @@ class MeshThread(BackgroundThread):
         print("Mesh stopped")
 
     def handle(self) -> None:
-        while True:
-            self.mesh.update()
-            self.mesh.dhcp()
+        self.mesh.update()
+        self.mesh.dhcp()
 
-            while self.network.available():
-                header, payload = self.network.read()
-                print(f"Received message {header.to_string()}")
+        if self.network.available():
+            header, payload = self.network.read()
+            print(f"Received message {header.to_string()}")
