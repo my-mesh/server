@@ -7,6 +7,7 @@ from app.routes.main import bp as main_bp
 from app.routes.nodes import bp as node_bp
 from app.routes.devices import bp as devices_bp
 from app.routes.data import bp as data_bp
+from app.routes.info import bp as info_bp
 
 from app.threads.factory import BackgroundThreadFactory
 
@@ -39,6 +40,7 @@ def create_app(test_config=None):
     app.register_blueprint(node_bp)
     app.register_blueprint(data_bp)
     app.register_blueprint(devices_bp)
+    app.register_blueprint(info_bp)
 
     notification_thread = BackgroundThreadFactory.create("notification")
     notification_thread.start()

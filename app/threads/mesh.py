@@ -4,7 +4,7 @@ from pyrf24 import RF24, RF24Network, RF24Mesh
 
 class MeshThread(BackgroundThread):
     def startup(self) -> None:
-        self.radio = RF24(22, 0)
+        self.radio = RF24(22, 10)
         self.network = RF24Network(self.radio)
         self.mesh = RF24Mesh(self.radio, self.network)
         self.mesh.node_id = 0
