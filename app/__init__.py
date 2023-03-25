@@ -13,6 +13,7 @@ from app.threads.factory import BackgroundThreadFactory
 
 from . import db
 
+
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
@@ -43,21 +44,27 @@ def create_app(test_config=None):
     app.register_blueprint(info_bp)
 
     notification_thread = BackgroundThreadFactory.create("notification")
-    notification_thread.start()
 
-    original_handler = signal.getsignal(signal.SIGINT)
+    if (
+        not (app.debug or os.environ.get("FLASK_ENV") == "development")
+        or os.environ.get("WERKZEUG_RUN_MAIN") == "true"
+    ):
+        notification_thread.start()
 
-    def sigint_handler(signum, frame):
-        notification_thread.stop()
+        original_handler = signal.getsignal(signal.SIGINT)
 
-        if notification_thread.is_alive():
-            notification_thread.join()
+        def sigint_handler(signum, frame):
+            notification_thread.stop()
 
-        original_handler(signum, frame)
+            # wait until thread is finished
+            if notification_thread.is_alive():
+                notification_thread.join()
 
-    try:
-        signal.signal(signal.SIGINT, sigint_handler)
-    except ValueError as e:
-        logging.error(f"{e}. Continuing execution...")
+            original_handler(signum, frame)
+
+        try:
+            signal.signal(signal.SIGINT, sigint_handler)
+        except ValueError as e:
+            logging.error(f"{e}. Continuing execution...")
 
     return app

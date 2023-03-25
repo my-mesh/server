@@ -1,5 +1,97 @@
-{% extends "base.html" %}
-{% block title %}Info{% endblock %}
-{% block content %}
-<div>Info</div>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Info</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      * {
+        margin: 0;
+      }
+
+      :where(html) {
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu,
+          Cantarell;
+      }
+
+      main {
+        display: grid;
+        place-items: center;
+        place-content: center;
+        height: 100vh;
+        background-color: #0d0f12;
+      }
+
+      #time {
+        font-size: clamp(2rem, 9vw, 3.5rem);
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        color: hsl(210, 16%, 93%);
+      }
+
+      #date {
+        font-size: clamp(0.75rem, 2vw, 1rem);
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        color: #adb5bd;
+      }
+
+      #middle {
+        color: hsl(210, 10%, 23%);
+      }
+    </style>
+  </head>
+  <body class="body">
+    <main class="main">
+      <div id="time">
+        <span id="hours"></span>
+        <span id="middle">:</span>
+        <span id="minutes"></span>
+      </div>
+      <div id="date"></div>
+    </main>
+    <script>
+      const hours = document.getElementById("hours");
+      const minutes = document.getElementById("minutes");
+      const date = document.getElementById("date");
+
+      const formatter = new Intl.DateTimeFormat("de", {
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+      });
+
+      date.innerHTML = formatter.format(new Date());
+
+      const getTime = () => {
+        const date = new Date();
+        const hours = date.getHours().toString().padStart(2, "0");
+        const minutes = date.getMinutes().toString().padStart(2, "0");
+
+        return {
+          hours,
+          minutes,
+        };
+      };
+
+      const setTime = () => {
+        const current_time = getTime();
+        hours.innerHTML = current_time.hours;
+        minutes.innerHTML = current_time.minutes;
+      };
+
+      setTime();
+
+      setInterval(getTime, 60000);
+    </script>
+  </body>
+</html>
