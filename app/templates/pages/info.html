@@ -30,7 +30,7 @@
       }
 
       #time {
-        font-size: clamp(2rem, 9vw, 3.5rem);
+        font-size: 5rem;
         font-weight: 700;
         display: flex;
         align-items: center;
@@ -38,7 +38,7 @@
       }
 
       #date {
-        font-size: clamp(0.75rem, 2vw, 1rem);
+        font-size: 3rem;
         font-weight: 700;
         display: flex;
         align-items: center;
@@ -73,6 +73,7 @@
       date.innerHTML = formatter.format(new Date());
 
       const getTime = () => {
+        console.log("yes")
         const date = new Date();
         const hours = date.getHours().toString().padStart(2, "0");
         const minutes = date.getMinutes().toString().padStart(2, "0");
@@ -91,7 +92,7 @@
 
       setTime();
 
-      setInterval(getTime, 60000);
+      setInterval(setTime, 60000);
     </script>
   </body>
 </html>
