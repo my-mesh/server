@@ -4,6 +4,13 @@ from app.threads.base import BackgroundThread
 
 from pyrf24 import RF24, RF24Network, RF24Mesh
 
+MESSAGETYPES_SLAVES = [
+    90, # temp and hum
+]
+
+MESSAGETYPES_MASTER = [
+    90, # change NodeID
+]
 
 class MeshThread(BackgroundThread):
     def startup(self) -> None:
@@ -26,21 +33,14 @@ class MeshThread(BackgroundThread):
         self.mesh.dhcp()
 
         if self.network.available():
+            index = -1
+
             header, payload = self.network.read()
-
             mesh_id = self.mesh.get_node_id(header.from_node)
-            node_id = header.from_node
 
-            print(mesh_id)
-            print(node_id)
-
-            # If node is not 255 and already inside new_nodes
             if mesh_id in self.new_nodes and mesh_id != 255:
                 print("remove node")
                 self.new_nodes.remove(mesh_id)
-
-            # Get index of node in new_nodes
-            index = -1
 
             try:
                 index = self.new_node.index(mesh_id)
@@ -61,7 +61,7 @@ class MeshThread(BackgroundThread):
                 req_json = req.json()
 
                 self.new_nodes.append(int(req_json["id"]))
-                
+
                 self.mesh.write(struct.pack("i", int(req_json["id"])), 90, 255)
 
             print(f"Received message {header.to_string()}")
