@@ -31,37 +31,37 @@ class MeshThread(BackgroundThread):
             mesh_id = self.mesh.get_node_id(header.from_node)
             node_id = header.from_node
 
-            node = {"node_id": node_id, "mesh_id": mesh_id}
+            print(mesh_id)
+            print(node_id)
 
             # If node is not 255 and already inside new_nodes
-            if node in self.new_nodes and mesh_id != 255:
+            if mesh_id in self.new_nodes and mesh_id != 255:
                 print("remove node")
-                self.new_nodes.remove(node)
+                self.new_nodes.remove(mesh_id)
 
             # Get index of node in new_nodes
-            index = next(
-                (
-                    i
-                    for i, obj in enumerate(self.new_nodes)
-                    if obj["node_id"] == node_id
-                ),
-                -1,
-            )
+            index = -1
+
+            try:
+                index = self.new_node.index(mesh_id)
+            except:
+                print("no index")
 
             # If node is already inside new_nodes but mesh_id not updateted
-            if index != -1 and mesh_id == 255:
+            if mesh_id in self.new_nodes and mesh_id == 255:
                 print("write mesh id second time")
-                self.network.write(struct.pack("i", self.new_nodes[index]["mesh_id"]))
+                self.mesh.write(struct.pack("i", self.new_nodes[index]["mesh_id"]), 90, 255)
 
             # If node is not inside new_nodes and mesh_id is 255
-            if index == -1 and mesh_id == 255:
+            if mesh_id not in self.new_nodes and mesh_id == 255:
                 print("write mesh id first time")
                 req = requests.post(
                     "http://127.0.0.1:5000/nodes", data={"type": "test"}
                 )
                 req_json = req.json()
-                node["mesh_id"] = req_json["id"]
-                self.new_nodes.append(node)
-                self.network.write(struct.pack("i", req_json["id"]))
+
+                self.new_nodes.append(int(req_json["id"]))
+                
+                self.mesh.write(struct.pack("i", int(req_json["id"])), 90, 255)
 
             print(f"Received message {header.to_string()}")
