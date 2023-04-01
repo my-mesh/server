@@ -4,6 +4,7 @@ from abc import abstractmethod, ABC
 
 TASKS_QUEUE = Queue()
 
+
 class BackgroundThread(threading.Thread, ABC):
     def __init__(self):
         super().__init__()

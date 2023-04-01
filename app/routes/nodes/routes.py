@@ -4,6 +4,7 @@ from app.db import get_db
 
 from .utils import handle_delete, handle_patch, handle_post
 
+
 @bp.get("/nodes/")
 def index():
     db = get_db()

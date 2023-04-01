@@ -1,6 +1,7 @@
 from app.threads.base import BackgroundThread
 from app.threads.mesh import MeshThread
 
+
 class BackgroundThreadFactory:
     @staticmethod
     def create(thread_type: str) -> BackgroundThread:

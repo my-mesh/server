@@ -12,7 +12,7 @@ def get_devices():
         rows = db.execute("SELECT node_id, created, type FROM node").fetchall()
     except db.Error as e:
         print(e)
-    
+
     for row in rows:
         node = {}
         node["node_id"] = row["node_id"]
