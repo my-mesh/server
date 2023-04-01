@@ -4,7 +4,6 @@ from app.db import get_db
 
 from .utils import handle_delete, handle_patch, handle_post
 
-
 @bp.get("/nodes/")
 def index():
     db = get_db()
@@ -30,13 +29,14 @@ def index():
 def post():
     db = get_db()
     form = request.form
-    
-    handle_post(db, form)
+
+    id = handle_post(db, form)
 
     if form.get("redirect") == "True":
         return redirect(request.referrer)
 
-    return jsonify({"status": "ok"})
+    return jsonify({"status": "ok", "id": id})
+
 
 @bp.post("/nodes/<id>")
 def post_id(id):

@@ -1,10 +1,12 @@
 def handle_post(db, form):
     try:
         db.execute(
-            "INSERT INTO node (mesh_id, type) VALUES (?, ?)",
-            (form.get("mesh_id"), form.get("type")),
+            "INSERT INTO node (type) VALUES (?)",
+            (form.get("type"),),
         )
         db.commit()
+
+        return db.execute("SELECT last_insert_rowid()").fetchone()[0]
     except db.Error as e:
         print(e)
 
