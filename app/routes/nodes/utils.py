@@ -1,20 +1,25 @@
-def handle_json(db, request):
-    data = request.json
-
+def handle_post(db, form):
     try:
-        db.execute("PRAGMA foreign_keys = ON")
         db.execute(
-            "INSERT INTO node (type, mesh_id) VALUES (?, ?)",
-            ("Test", data["mesh_id"]),
+            "INSERT INTO node (mesh_id, type) VALUES (?, ?)",
+            (form.get("mesh_id"), form.get("type")),
         )
         db.commit()
     except db.Error as e:
         print(e)
 
 
-def handle_form(db, request):
-    print(request.form)
+def handle_patch(db, form, id):
+    print(id)
+    try:
+        db.execute(
+            "UPDATE node SET active = ? WHERE node_id = ?",
+            (form.get("active"), id),
+        )
+        db.commit()
+    except db.Error as e:
+        print(e)
 
 
-def handle_form_patch(db, request):
-    print(request.form)
+def handle_delete(db, form, id):
+    pass

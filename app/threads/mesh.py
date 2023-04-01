@@ -1,6 +1,6 @@
 import requests
 from app.threads.base import BackgroundThread
-from pyrf24 import RF24, RF24Network, RF24Mesh
+#from pyrf24 import RF24, RF24Network, RF24Mesh
 
 class MeshThread(BackgroundThread):
     def startup(self) -> None:

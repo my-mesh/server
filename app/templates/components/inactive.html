@@ -4,9 +4,14 @@
       <div>
         <div>Mesh ID: {{element.mesh_id}}</div>
         <div>Type: {{element.type}}</div>
-        <form>
-            <button>Add</button>
-            <button>Remove</button>
+        <form method="POST" action="/nodes/{{element.node_id}}">
+          <input hidden type="text" name="method" value="patch">
+          <input hidden type="text" name="active" value="1">
+          <input hidden type="text" name="redirect" value="True">
+          <button>Activate</button>
+        </form>
+        <form method="POST" action="/nodes">
+          <button>Remove</button>
         </form>
       </div>
       {% endfor %}

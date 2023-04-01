@@ -2,7 +2,8 @@ from flask import jsonify, redirect, request
 from app.routes.nodes import bp
 from app.db import get_db
 
-from .utils import handle_form, handle_json
+from .utils import handle_delete, handle_patch, handle_post
+
 
 @bp.get("/nodes/")
 def index():
@@ -28,17 +29,26 @@ def index():
 @bp.post("/nodes/")
 def post():
     db = get_db()
-    content_type = request.headers.get('Content-Type')
+    form = request.form
+    
+    handle_post(db, form)
 
-    print(request.form)
+    if form.get("redirect") == "True":
+        return redirect(request.referrer)
 
-    return redirect(request.referrer)
+    return jsonify({"status": "ok"})
 
-@bp.patch("/nodes/")
-def patch():
+@bp.post("/nodes/<id>")
+def post_id(id):
     db = get_db()
-    content_type = request.headers.get('Content-Type')
-    
-    print(request.form)
-    
-    return redirect(request.referrer)
+    form = request.form
+
+    if form.get("method") == "patch":
+        handle_patch(db, form, id)
+    elif form.get("method") == "delete":
+        handle_delete(db, form, id)
+
+    if form.get("redirect") == "True":
+        return redirect(request.referrer)
+
+    return jsonify({"status": "ok"})
