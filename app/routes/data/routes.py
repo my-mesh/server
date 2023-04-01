@@ -29,15 +29,19 @@ def index():
 @bp.post("/data")
 def post():
     db = get_db()
+    form = request.form
 
     try:
         db.execute("PRAGMA foreign_keys = ON")
         db.execute(
             "INSERT INTO data (payload, node_id) VALUES (?, ?)",
-            ("Test", 20),
+            (form.get("payload"), form.get("node_id")),
         )
         db.commit()
     except db.Error as e:
         print(e)
 
-    return redirect(request.referrer)
+    if form.get("redirect") == "True":
+        return redirect(request.referrer)
+
+    return jsonify({"status": "ok"})
