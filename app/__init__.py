@@ -11,7 +11,7 @@ from app.routes.info import bp as info_bp
 
 from app.threads.factory import BackgroundThreadFactory
 
-from . import db
+from app import db
 
 
 def create_app(test_config=None):

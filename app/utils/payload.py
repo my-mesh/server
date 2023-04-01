@@ -1,5 +1,5 @@
 import struct
-from constant import MESSAGETYPES_SLAVES
+from app.constant import MESSAGETYPES_SLAVES
 
 
 def convert_payload(payload, type):
