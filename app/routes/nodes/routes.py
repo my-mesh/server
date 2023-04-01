@@ -2,6 +2,7 @@ from flask import jsonify, redirect, request
 from app.routes.nodes import bp
 from app.db import get_db
 
+from .utils import handle_form, handle_json
 
 @bp.get("/nodes/")
 def index():
@@ -26,17 +27,18 @@ def index():
 
 @bp.post("/nodes/")
 def post():
-    data = request.json
     db = get_db()
+    content_type = request.headers.get('Content-Type')
 
-    try:
-        db.execute("PRAGMA foreign_keys = ON")
-        db.execute(
-            "INSERT INTO node (type, mesh_id) VALUES (?, ?)",
-            ("Test", data["mesh_id"]),
-        )
-        db.commit()
-    except db.Error as e:
-        print(e)
+    print(request.form)
 
+    return redirect(request.referrer)
+
+@bp.patch("/nodes/")
+def patch():
+    db = get_db()
+    content_type = request.headers.get('Content-Type')
+    
+    print(request.form)
+    
     return redirect(request.referrer)
