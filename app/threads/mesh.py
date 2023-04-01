@@ -1,5 +1,5 @@
+import requests
 from app.threads.base import BackgroundThread
-
 from pyrf24 import RF24, RF24Network, RF24Mesh
 
 class MeshThread(BackgroundThread):
@@ -14,8 +14,8 @@ class MeshThread(BackgroundThread):
         print("Mesh started")
 
     def shutdown(self) -> None:
-        self.power = False
         print("Mesh stopped")
+        self.power = False
 
     def handle(self) -> None:
         self.mesh.update()
@@ -23,4 +23,8 @@ class MeshThread(BackgroundThread):
 
         if self.network.available():
             header, payload = self.network.read()
+
+            id = self.mesh.get_node_id(header.from_node)
+            data = {"mesh_id": id}
+            req = requests.post("http://127.0.0.1:5000/nodes/", json = data)
             print(f"Received message {header.to_string()}")

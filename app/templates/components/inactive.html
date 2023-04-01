@@ -1,0 +1,14 @@
+{% macro Inactive(data) -%}
+<div class="inactive">
+      {% for element in data%}
+      <div>
+        <div>Mesh ID: {{element.mesh_id}}</div>
+        <div>Type: {{element.type}}</div>
+        <form>
+            <button>Add</button>
+            <button>Remove</button>
+        </form>
+      </div>
+      {% endfor %}
+</div>
+{%- endmacro %}

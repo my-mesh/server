@@ -26,13 +26,14 @@ def index():
 
 @bp.post("/nodes/")
 def post():
+    data = request.json
     db = get_db()
 
     try:
         db.execute("PRAGMA foreign_keys = ON")
         db.execute(
-            "INSERT INTO node (type) VALUES (?)",
-            ("Test",),
+            "INSERT INTO node (type, mesh_id) VALUES (?, ?)",
+            ("Test", data["mesh_id"]),
         )
         db.commit()
     except db.Error as e:

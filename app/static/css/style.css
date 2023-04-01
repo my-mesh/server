@@ -204,3 +204,16 @@
   padding-inline: var(--size-2);
   padding-block: var(--size-1);
 }
+
+.inactive {
+  display: flex;
+  gap: var(--size-fluid-2)
+}
+
+.inactive > div {
+  padding: var(--size-fluid-1);
+  background-color: var(--gray-2);
+  border-radius: var(--radius-2);
+  aspect-ratio: var(--ratio-square);
+  border: var(--border-size-1) solid var(--gray-4);
+}
