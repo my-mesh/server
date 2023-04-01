@@ -35,6 +35,7 @@ class MeshThread(BackgroundThread):
 
             # If node is not 255 and already inside new_nodes
             if node in self.new_nodes and mesh_id != 255:
+                print("remove node")
                 self.new_nodes.remove(node)
 
             # Get index of node in new_nodes
@@ -49,10 +50,12 @@ class MeshThread(BackgroundThread):
 
             # If node is already inside new_nodes but mesh_id not updateted
             if index != -1 and mesh_id == 255:
+                print("write mesh id second time")
                 self.network.write(struct.pack("i", self.new_nodes[index]["mesh_id"]))
 
             # If node is not inside new_nodes and mesh_id is 255
             if index == -1 and mesh_id == 255:
+                print("write mesh id first time")
                 req = requests.post(
                     "http://127.0.0.1:5000/nodes", data={"type": "test"}
                 )
