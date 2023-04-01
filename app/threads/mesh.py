@@ -4,14 +4,6 @@ from app.threads.base import BackgroundThread
 
 from pyrf24 import RF24, RF24Network, RF24Mesh
 
-MESSAGETYPES_SLAVES = [
-    90, # temp and hum
-]
-
-MESSAGETYPES_MASTER = [
-    90, # change NodeID
-]
-
 class MeshThread(BackgroundThread):
     def startup(self) -> None:
         self.radio = RF24(22, 10)
