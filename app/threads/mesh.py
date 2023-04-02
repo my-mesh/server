@@ -2,7 +2,7 @@ import struct
 import requests
 from app.threads.base import BackgroundThread
 
-#from pyrf24 import RF24, RF24Network, RF24Mesh
+from pyrf24 import RF24, RF24Network, RF24Mesh
 
 from app.utils.payload import convert_payload
 
@@ -62,5 +62,5 @@ class MeshThread(BackgroundThread):
                 self.mesh.write(struct.pack("i", int(req_json["id"])), 90, 255)
 
             payload_converted = convert_payload(payload, header.type)
-            req = requests.post("http://127.0.0.1:5000/data", data=payload_converted)
+            #req = requests.post("http://127.0.0.1:5000/data", data=payload_converted)
             print(f"Received message {header.to_string()}")
