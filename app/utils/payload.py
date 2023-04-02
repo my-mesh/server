@@ -1,4 +1,5 @@
 import struct
+import json
 from app.constant import MESSAGETYPES_SLAVES
 
 
@@ -16,4 +17,4 @@ def convert_payload(payload, type):
         except:
             return None
 
-        return result
+        return json.dumps(result)

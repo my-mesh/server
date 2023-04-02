@@ -6,7 +6,6 @@ from pyrf24 import RF24, RF24Network, RF24Mesh
 
 from app.utils.payload import convert_payload
 
-
 def get_index(data, id, search):
     for index, element in enumerate(data):
         if (element[search] == id):
@@ -21,7 +20,6 @@ class MeshThread(BackgroundThread):
         self.mesh = RF24Mesh(self.radio, self.network)
         self.mesh.node_id = 0
         self.new_nodes = []
-        self.new_ids = []
 
         if not self.mesh.begin():
             raise OSError("Radio hardware not responding.")
@@ -36,8 +34,6 @@ class MeshThread(BackgroundThread):
         self.mesh.dhcp()
 
         if self.network.available():
-            index = -1
-
             header, payload = self.network.read()
             node_id = self.mesh.get_node_id(header.from_node)
             network_id = header.from_node
@@ -49,25 +45,19 @@ class MeshThread(BackgroundThread):
             print(self.new_nodes)
 
             index_network = get_index(self.new_nodes, network_id, "network_id")
-            index_node = get_index(self.new_nodes, network_id, "node_id")
-
-            print(index_network)
-            print(index_node)
+            index_node = get_index(self.new_nodes, node_id, "node_id")
 
             if index_node != -1 or node in self.new_nodes:
-                print("remove node")
-                self.new_nodes.pop(index)
+                self.new_nodes.pop(index_node)
 
             # If node is already inside new_nodes but mesh_id not updateted
             if index_network != -1:
-                print("write mesh id second time")
                 self.mesh.write(
-                    struct.pack("i", self.new_nodes[index]["node_id"]), 90, 255
+                    struct.pack("i", self.new_nodes[index_network]["node_id"]), 90, 255
                 )
 
             # If node is not inside new_nodes and mesh_id is 255
             if node_id == 255 and index_network == -1:
-                print("write mesh id first time")
                 req = requests.post(
                     "http://127.0.0.1:5000/nodes", data={"type": "test"}
                 )
@@ -76,16 +66,13 @@ class MeshThread(BackgroundThread):
                 node["node_id"] = int(req_json["id"])
 
                 self.new_nodes.append(node)
-
                 self.mesh.write(struct.pack("i", int(req_json["id"])), 90, 255)
 
+            payload_converted = convert_payload(payload, header.type)
 
-            print("-----------")
-            #payload_converted = convert_payload(payload, header.type)
+            result = dict()
+            result["payload"] = payload_converted
+            result["node_id"] = node_id
 
-            #result = dict()
-            #result["payload"] = payload_converted
-            #result["node_id"] = mesh_id
-
-            #req = requests.post("http://127.0.0.1:5000/data", data=result)
-            #print(f"Received message {header.to_string()}")
+            print(result)
+            req = requests.post("http://127.0.0.1:5000/data", data=result)
