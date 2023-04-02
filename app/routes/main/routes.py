@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, json
 from app.routes.main import bp
 
 from app.db import get_db
@@ -46,5 +46,5 @@ def index():
         "/pages/main.html",
         page="dashboard",
         devices=devices,
-        inactive_devices=get_nodes_inactive(db),
+        inactive_devices=get_nodes_inactive(db)
     )

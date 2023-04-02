@@ -1,5 +1,5 @@
 {% macro Inactive(data) -%}
-<div class="inactive">
+<div class="inactive" id="inactive">
       {% for element in data%}
       <div>
         <div>Mesh ID: {{element.mesh_id}}</div>
@@ -15,27 +15,47 @@
 </div>
 <script>
   const inactive = document.getElementById("inactive");
+  let current_nodes = []
 
-  let eventSource = new EventSource("/listen");
+  const getData = async () => {
+    const res = await fetch("http://127.0.0.1:5000/nodes")
 
-  eventSource.onmessage = function (e) {
-    console.log(e);
-    console.log(e.data)
-    console.log(JSON.parse(e.data))
-  };
+    const nodes = await res.json()
+    return nodes
+  }
 
-  const createNode = (message) => {
+  const setData = (nodes) => {
+    console.log("yes")
+    inactive.innerHTML = ""
+    nodes.map(item => inactive.appendChild(createNode(item)))
+  }
+
+  const handleData = async () => {
+    const nodes = await getData()
+
+    if (current_nodes.length == nodes.length) return
+
+    current_nodes = nodes;
+    setData(nodes)
+  }
+
+  const createNode = (data) => {
     const node = document.createElement("div");
     node.innerHTML = `
-    <form method="POST" action="/nodes/">
-      <input hidden type="text" name="method" value="patch">
-      <input hidden type="text" name="active" value="1">
-      <input hidden type="text" name="redirect" value="True">
-      <button>Activate</button>
-    </form>    
+    <div>
+        <div>Mesh ID: ${data.node_id}</div>
+        <div>Type: ${data.type}</div>
+        <form method="POST" action="/nodes/${data.node_id}">
+          <input hidden type="text" name="method" value="patch">
+          <input hidden type="text" name="active" value="1">
+          <input hidden type="text" name="redirect" value="True">
+          <button>Activate</button>
+        </form>
+    </div>
     `;
     return node;
   };
-  console.log(event);
+  
+  setInterval(handleData, 10000)
 </script>
 {%- endmacro %}
