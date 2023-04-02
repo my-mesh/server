@@ -13,4 +13,29 @@
       </div>
       {% endfor %}
 </div>
+<script>
+  const inactive = document.getElementById("inactive");
+
+  let eventSource = new EventSource("/listen");
+
+  eventSource.onmessage = function (e) {
+    console.log(e);
+    console.log(e.data)
+    console.log(JSON.parse(e.data))
+  };
+
+  const createNode = (message) => {
+    const node = document.createElement("div");
+    node.innerHTML = `
+    <form method="POST" action="/nodes/">
+      <input hidden type="text" name="method" value="patch">
+      <input hidden type="text" name="active" value="1">
+      <input hidden type="text" name="redirect" value="True">
+      <button>Activate</button>
+    </form>    
+    `;
+    return node;
+  };
+  console.log(event);
+</script>
 {%- endmacro %}
