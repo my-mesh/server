@@ -31,6 +31,8 @@ def post():
     db = get_db()
     form = request.form
 
+    print(form)
+
     try:
         db.execute("PRAGMA foreign_keys = ON")
         db.execute(

@@ -8,13 +8,12 @@ def convert_payload(payload, type):
 
     # Temp and Hum
     if type == MESSAGETYPES_SLAVES[0]:
-        temp = None
-        hum = None
+        result = dict()
 
         try:
-            temp = struct.unpack("f", payload[0:4])
-            hum = struct.unpack("f", payload[4:8])
+            result["temp"] = struct.unpack("f", payload[0:4])[0]
+            result["hum"] = struct.unpack("f", payload[4:8])[0]
         except:
             return None
 
-        return {"temp": temp[0], "hum": hum[0]}
+        return result
