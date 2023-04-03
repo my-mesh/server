@@ -8,7 +8,7 @@ from app.utils.db import select
 def index():
     db = get_db()
 
-    devices = select(db, "node", ["node_id", "created", "type"])
+    devices = select(db, "node", ["node_id", "created", "type", "status"])
 
     devices_inactive = select(
         db, "node", ["node_id", "created", "type", "active"], where="active = 0"

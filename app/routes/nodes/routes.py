@@ -46,7 +46,7 @@ def get_see():
             stream = "data: {}\n\n".format(json.dumps(nodes, default=str))
 
             print("data")
-            gevent.sleep(1)
+            gevent.sleep(10)
             yield stream
 
     return Response(event_stream(), mimetype="text/event-stream")
