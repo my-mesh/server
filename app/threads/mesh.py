@@ -2,7 +2,7 @@ import struct
 import requests
 from app.threads.base import BackgroundThread
 
-#from pyrf24 import RF24, RF24Network, RF24Mesh
+from pyrf24 import RF24, RF24Network, RF24Mesh
 
 from app.utils.payload import convert_payload
 
