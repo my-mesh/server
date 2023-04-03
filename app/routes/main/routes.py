@@ -14,11 +14,13 @@ def index():
         db, "node", ["node_id", "created", "type", "active"], where="active = 0"
     )
 
-    print(devices_inactive)
+    for element in devices:
+        element["link"] = f"/devices/{element['node_id']}"
 
     return render_template(
         "/pages/main.html",
         page="dashboard",
+        title="Dashboard",
         devices=devices,
         devices_inactive=devices_inactive,
     )

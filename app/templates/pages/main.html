@@ -8,4 +8,9 @@
   <h2>Neue Nodes</h2>
   {{Inactive(devices_inactive)}}
 </section>
+
+<section class="area">
+  <h2>Übersicht</h2>
+  {{Table(["ID", "Created", "Type"], devices, True)}}
+</section>
 {% endblock %}
