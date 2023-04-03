@@ -4,6 +4,7 @@
 {% block title %}Devices{% endblock %}
 {% block content %}
   <div class="card">
+    <h2>Übersicht</h2>
     {{Table(["ID", "Created", "Type"], devices, True)}}
   </div>
 {% endblock %}

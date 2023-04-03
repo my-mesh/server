@@ -1,7 +1,10 @@
-from flask import jsonify, redirect, request
+import json
+from flask import jsonify, redirect, request, stream_with_context, Response
 from app.routes.nodes import bp
 from app.db import get_db
-
+from app.utils.db import select
+import time
+import datetime
 from .utils import handle_delete, handle_patch, handle_post
 
 
@@ -24,6 +27,26 @@ def index():
         nodes.append(node)
 
     return jsonify(nodes)
+
+
+@bp.get("/nodes/sse")
+def get_see():
+    db = get_db()
+
+    @stream_with_context
+    def event_stream():
+        now = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
+        while True:
+            nodes = select(db, "node", ["node_id", "created", "type"], where="created > ? AND active = 0",args=(now,))
+            
+            if len(nodes) != 0:
+                now = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
+            
+            stream = "data: {}\n\n".format(json.dumps(nodes, default=str))
+            time.sleep(10)
+            yield stream
+
+    return Response(event_stream(), mimetype="text/event-stream")
 
 
 @bp.post("/nodes/")

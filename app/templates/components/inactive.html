@@ -1,23 +1,105 @@
 {% macro Inactive(data) -%}
 <div class="inactive" id="inactive">
-      {% for element in data%}
+  {% for element in data%}
+  <div data-style="{{element.type}}">
+    <header class="inactive--header">
       <div>
-        <header class="inactive--header">
-          <div>
-            <span>Nr: {{element.node_id}}</span>
-          </div>
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9a4 4 0 0 0-2 7.5"></path><path d="M12 3v2"></path><path d="m6.6 18.4-1.4 1.4"></path><path d="M20 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"></path><path d="M4 13H2"></path><path d="M6.34 7.34 4.93 5.93"></path></svg>
-        </header>
-        <div class="inactive--content">
-          <span>Temperatur und Feuchtigkeit</span>
-        </div>
-        <form method="POST" action="/nodes/{{element.node_id}}">
-          <input hidden type="text" name="method" value="patch">
-          <input hidden type="text" name="active" value="1">
-          <input hidden type="text" name="redirect" value="True">
-          <button>Hinzufügen</button>
-        </form>
+        <span>Nr: {{element.node_id}}</span>
       </div>
-      {% endfor %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M12 9a4 4 0 0 0-2 7.5"></path>
+        <path d="M12 3v2"></path>
+        <path d="m6.6 18.4-1.4 1.4"></path>
+        <path d="M20 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"></path>
+        <path d="M4 13H2"></path>
+        <path d="M6.34 7.34 4.93 5.93"></path>
+      </svg>
+    </header>
+    <div class="inactive--content">
+      <div>
+        <span>Typ:</span>
+        {% if element.type == "90" %}
+        <span>Temperatur und Feuchtigkeit</span>
+        {% endif %}
+      </div>
+
+      <div>
+        <span>Erstellt:</span>
+        <span>20. Januar 2023</span>
+      </div>
+    </div>
+    <form method="POST" action="/nodes/{{element.node_id}}">
+      <input hidden type="text" name="method" value="patch" />
+      <input hidden type="text" name="active" value="1" />
+      <input hidden type="text" name="redirect" value="True" />
+      <button>Hinzufügen</button>
+    </form>
+  </div>
+  {% endfor %}
 </div>
+
+<script>
+  const inactive = document.getElementById("inactive")
+  const event = new EventSource("/nodes/sse");
+
+  event.addEventListener("message", (event) => {
+    const data = JSON.parse(event.data);    
+    if (data.length == 0) return;
+
+    data.map((element) => {
+      inactive.appendChild(addEvent(element));
+    });
+  });
+
+  const addEvent = (element) => {
+    const div = document.createElement("div");
+
+    div.innerHTML = `
+    <header class="inactive--header">
+      <div>
+        <span>Nr: ${element.node_id}</span>
+      </div>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M12 9a4 4 0 0 0-2 7.5"></path>
+        <path d="M12 3v2"></path>
+        <path d="m6.6 18.4-1.4 1.4"></path>
+        <path d="M20 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"></path>
+        <path d="M4 13H2"></path>
+        <path d="M6.34 7.34 4.93 5.93"></path>
+      </svg>
+    </header>
+    <div class="inactive--content">
+      <span>Temperatur und Feuchtigkeit</span>
+    </div>
+    <form method="POST" action="/nodes/${element.node_id}">
+      <input hidden type="text" name="method" value="patch" />
+      <input hidden type="text" name="active" value="1" />
+      <input hidden type="text" name="redirect" value="True" />
+      <button>Hinzufügen</button>
+    </form>
+    `;
+
+    return div
+  };
+</script>
 {%- endmacro %}
