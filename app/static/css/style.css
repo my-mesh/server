@@ -36,6 +36,16 @@ html {
   scrollbar-color: var(--scrollthumb-color) transparent;
 }
 
+* {
+  scrollbar-width: thin;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  background-color: var(--surface-2);
+  border: 3px solid var(--surface-3);
+}
+
 .body {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -173,6 +183,7 @@ html {
   display: flex;
   gap: var(--size-fluid-2);
   overflow-x: auto;
+  padding-block: var(--size-fluid-2);
 }
 
 .inactive > div {
@@ -186,6 +197,7 @@ html {
   min-width: 20rem;
   gap: var(--size-fluid-2);
   line-height: 1.2;
+  justify-content: space-between;
 }
 
 .inactive--header {
@@ -215,8 +227,9 @@ html {
 button {
   background: var(--blue-9);
   box-shadow: var(--shadow-1);
-  border-radius: var(--radius-2);
+  border-radius: var(--radius-3);
   padding: var(--size-2);
+  padding-inline: var(--size-3);
   border: none;
   color: var(--text-1);
 }
