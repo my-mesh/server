@@ -26,7 +26,21 @@
         place-items: center;
         place-content: center;
         height: 100vh;
-        background-color: #0d0f12;
+        background: linear-gradient(45deg, rgba(12,48,66,1) 0%, rgba(22,22,22,1) 27%, rgba(38,50,71,1) 56%, rgba(34,25,56,1) 100%); 
+        background-size: 400% 400%;
+        animation: gradient 30s ease infinite;
+      }
+
+      @keyframes gradient {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
       }
 
       #time {
@@ -65,7 +79,6 @@
       const date = document.getElementById("date");
 
       const formatter = new Intl.DateTimeFormat("de", {
-        weekday: "long",
         month: "long",
         day: "numeric",
       });
@@ -73,7 +86,6 @@
       date.innerHTML = formatter.format(new Date());
 
       const getTime = () => {
-        console.log("yes")
         const date = new Date();
         const hours = date.getHours().toString().padStart(2, "0");
         const minutes = date.getMinutes().toString().padStart(2, "0");
