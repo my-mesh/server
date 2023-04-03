@@ -183,7 +183,7 @@ html {
   display: flex;
   gap: var(--size-fluid-2);
   overflow-x: auto;
-  padding-block: var(--size-fluid-2);
+  padding-block-end: var(--size-fluid-2);
 }
 
 .inactive > div {
