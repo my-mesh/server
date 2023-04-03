@@ -1,5 +1,6 @@
 import json
 from flask import jsonify, redirect, request, stream_with_context, Response
+import gevent
 from app.routes.nodes import bp
 from app.db import get_db
 from app.utils.db import select
@@ -43,7 +44,9 @@ def get_see():
                 now = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
             
             stream = "data: {}\n\n".format(json.dumps(nodes, default=str))
-            time.sleep(10)
+
+            print("data")
+            gevent.sleep(1)
             yield stream
 
     return Response(event_stream(), mimetype="text/event-stream")

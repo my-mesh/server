@@ -1,6 +1,4 @@
-import logging
 import os
-import signal
 
 from flask import Flask
 from app.routes.main import bp as main_bp
