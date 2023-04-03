@@ -4,26 +4,8 @@
 {% extends "base.html" %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
-  <h1>Index</h1>
-
-  <form method="POST" action="/nodes">
-    <h2>Nodes</h2>
-    <input type="text" name="mesh_id" value="4">
-    <input type="text" name="type" value="90">
-    <input hidden type="text" name="redirect" value="True">
-    <button>Submit</button>
-  </form>
-
-  <form method="POST" action="/data">
-    <h2>Data</h2>
-    <button>Submit</button>
-  </form>
-
-  <div class="card">
-    {{Inactive(devices_inactive)}}
-  </div>
-  
-  <div class="card">
-    {{Table(["ID", "Created", "Type"], devices)}}
-  </div>
+<section class="area">
+  <h2>Neue Nodes</h2>
+  {{Inactive(devices_inactive)}}
+</section>
 {% endblock %}

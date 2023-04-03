@@ -2,9 +2,6 @@
 
 {% macro Table(headings, list, link) -%}
 <div class="table--container">
-  <header>
-    {{Input("text", "", "Suche ...", "search")}}
-  </header>
   <table class="table" id="table">
     <thead>
       <tr>
@@ -28,31 +25,4 @@
     </tbody>
   </table>
 </div>
-
-<script>
-  const search = document.getElementById("search");
-
-  const tbody = document.getElementById("tbody");
-
-  const tr = tbody.getElementsByTagName("tr");
-
-  const tr_length = tr[0].cells.length;
-
-  search.addEventListener("input", (event) => {
-    filter = event.target.value.toUpperCase();
-
-    for (i = 0; i < tr.length; i++) {
-      for (let y = 0; y < tr_length; y++) {
-        const value = tr[i].children[y].textContent;
-
-        if (value.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-          break;
-        } else {
-          tr[i].style.display = "none";
-        }
-      }
-    }
-  });
-</script>
 {%- endmacro %}
