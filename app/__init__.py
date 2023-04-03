@@ -10,8 +10,6 @@ from app.routes.data import bp as data_bp
 from app.routes.info import bp as info_bp
 from app.routes.listen import bp as listen_bp
 
-from app.threads.factory import BackgroundThreadFactory
-
 from app import db
 
 
@@ -44,29 +42,5 @@ def create_app(test_config=None):
     app.register_blueprint(devices_bp)
     app.register_blueprint(info_bp)
     app.register_blueprint(listen_bp)
-
-    notification_thread = BackgroundThreadFactory.create("notification")
-
-    if (
-        not (app.debug or os.environ.get("FLASK_ENV") == "development")
-        or os.environ.get("WERKZEUG_RUN_MAIN") == "true"
-    ):
-        notification_thread.start()
-
-        original_handler = signal.getsignal(signal.SIGINT)
-
-        def sigint_handler(signum, frame):
-            notification_thread.stop()
-
-            # wait until thread is finished
-            if notification_thread.is_alive():
-                notification_thread.join()
-
-            original_handler(signum, frame)
-
-        try:
-            signal.signal(signal.SIGINT, sigint_handler)
-        except ValueError as e:
-            logging.error(f"{e}. Continuing execution...")
 
     return app
