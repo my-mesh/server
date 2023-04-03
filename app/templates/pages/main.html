@@ -20,18 +20,10 @@
   </form>
 
   <div class="card">
-    {{Inactive(inactive_devices)}}
+    {{Inactive(devices_inactive)}}
   </div>
   
   <div class="card">
     {{Table(["ID", "Created", "Type"], devices)}}
   </div>
-
-  <script>
-    const source = new EventSource('/listen');
-
-    source.onmessage = () => {
-      console.log("Message received")
-    }
-  </script>
 {% endblock %}
