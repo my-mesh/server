@@ -8,24 +8,10 @@ from app.utils.db import select
 @bp.get("/data")
 def index():
     db = get_db()
-    nodes = []
 
-    try:
-        rows = db.execute(
-            "SELECT data_id, created, payload, node_id FROM data"
-        ).fetchall()
-    except db.Error as e:
-        print(e)
+    data = select(db, "data", ["data_id", "created", "payload", "node_id"])
 
-    for row in rows:
-        node = {}
-        node["data_id"] = row["data_id"]
-        node["created"] = row["created"]
-        node["payload"] = row["payload"]
-        node["node_id"] = row["node_id"]
-        nodes.append(node)
-
-    return jsonify(nodes)
+    return jsonify(data)
 
 @bp.get("/data/sse")
 def get_sse():
@@ -53,8 +39,6 @@ def get_sse():
 def post():
     db = get_db()
     form = request.form
-
-    print(form)
 
     try:
         db.execute("PRAGMA foreign_keys = ON")
