@@ -11,22 +11,10 @@ from .utils import handle_delete, handle_patch, handle_post
 @bp.get("/nodes/")
 def index():
     db = get_db()
-    nodes = []
 
-    try:
-        rows = db.execute("SELECT node_id, created, type, active FROM node").fetchall()
-    except db.Error as e:
-        print(e)
+    data = select(db, "node", ["node_id", "created", "type", "active"])
 
-    for row in rows:
-        node = {}
-        node["node_id"] = row["node_id"]
-        node["created"] = row["created"]
-        node["type"] = row["type"]
-        node["active"] = row["active"]
-        nodes.append(node)
-
-    return jsonify(nodes)
+    return jsonify(data)
 
 
 @bp.get("/nodes/sse")
