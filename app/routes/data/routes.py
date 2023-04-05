@@ -43,7 +43,7 @@ def get_sse():
             stream = "data: {}\n\n".format(json.dumps(nodes, default=str))
 
             print("data")
-            gevent.sleep(10)
+            gevent.sleep(2)
             yield stream
 
     return Response(event_stream(), mimetype="text/event-stream")

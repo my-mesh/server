@@ -1,10 +1,36 @@
-{% from "/components/table.html" import Table %}
+{% from "/components/table.html" import Table %} {% extends "base.html" %} {%
+block title %}Devices{% endblock %} {% block content %}
+<div class="card">
+  <h2>Aktuelle Daten</h2>
+  {{Table(["ID", "Created", "Type"], nodes, True)}}
+</div>
+<script>
+  const inactive = document.getElementById("tbody");
+  const event = new EventSource("/data/sse");
 
-{% extends "base.html" %}
-{% block title %}Devices{% endblock %}
-{% block content %}
-  <div class="card">
-    <h2>Aktuelle Daten</h2>
-    {{Table(["ID", "Created", "Type"], nodes, True)}}
-  </div>
+  event.addEventListener("message", (event) => {
+    console.log("message")
+    const data = JSON.parse(event.data);
+    //if (data.length == 0) return;
+
+    inactive.appendChild(addEvent());
+
+    data.map((element) => {
+      inactive.appendChild(addEvent(element));
+    });
+  });
+
+  const addEvent = (element) => {
+    console.log(1)
+    const object = document.createElement("tr");
+
+    object.innerHTML = `
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+    `;
+
+    return object;
+  };
+</script>
 {% endblock %}
