@@ -1,7 +1,9 @@
-from flask import jsonify, request, redirect
+from flask import jsonify, redirect, request, stream_with_context, Response, json
 from app.routes.data import bp
 from app.db import get_db
-
+import datetime
+import gevent
+from app.utils.db import select
 
 @bp.get("/data")
 def index():
@@ -24,6 +26,27 @@ def index():
         nodes.append(node)
 
     return jsonify(nodes)
+
+@bp.get("/data/sse")
+def get_sse():
+    db = get_db()
+
+    @stream_with_context
+    def event_stream():
+        now = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
+        while True:
+            nodes = select(db, "data", ["payload"], where="created > ? AND node_id = 0",args=(now,))
+            
+            if len(nodes) != 0:
+                now = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
+            
+            stream = "data: {}\n\n".format(json.dumps(nodes, default=str))
+
+            print("data")
+            gevent.sleep(10)
+            yield stream
+
+    return Response(event_stream(), mimetype="text/event-stream")
 
 
 @bp.post("/data")

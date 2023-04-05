@@ -4,7 +4,6 @@ import gevent
 from app.routes.nodes import bp
 from app.db import get_db
 from app.utils.db import select
-import time
 import datetime
 from .utils import handle_delete, handle_patch, handle_post
 
