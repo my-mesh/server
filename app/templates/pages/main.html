@@ -4,13 +4,13 @@
 {% extends "base.html" %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
-<section class="area">
-  <h2>Neue Nodes</h2>
-  {{Inactive(devices_inactive)}}
-</section>
+  <section class="area">
+    <h2>Neue Nodes</h2>
+    {{Inactive(devices_inactive)}}
+  </section>
 
-<section class="card">
-  <h2>Übersicht</h2>
-  {{Table(["ID", "Created", "Typ", "Status"], devices, True)}}
-</section>
+  <section class="card">
+    <h2>Übersicht</h2>
+    {{Table(["ID", "Created", "Typ", "Status"], devices, True)}}
+  </section>
 {% endblock %}

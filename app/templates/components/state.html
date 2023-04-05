@@ -1,7 +1,7 @@
 {% macro State(state) -%}
-{% if state == 0 %}
-<div class="state" data-state="closed">Geschlossen</div>
-{% elif state == 1 %}
-<div class="state" data-state="open">Offen</div>
-{% endif %}
+    {% if state == 0 %}
+        <div class="state" data-state="closed">Geschlossen</div>
+    {% elif state == 1 %}
+        <div class="state" data-state="open">Offen</div>
+    {% endif %}
 {%- endmacro %}

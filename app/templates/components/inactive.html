@@ -1,55 +1,55 @@
 {% from "/components/icon.html" import Icon %}
 
 {% macro Inactive(data) -%}
-<div class="inactive" id="inactive">
-  {% for element in data%}
-  <div data-style="{{element.type}}">
-    <header class="inactive--header">
-      <div>
-        <span>Nr: {{element.node_id}}</span>
-      </div>
-      {{Icon(element.type)}}
-    </header>
-    <div class="inactive--content">
-      <div>
-        <span>Typ:</span>
-        {% if element.type == "90" %}
-        <span>Temperatur und Feuchtigkeit</span>
-        {% endif %}
-      </div>
+  <div class="inactive" id="inactive">
+    {% for element in data%}
+      <div data-style="{{element.type}}">
+        <header class="inactive--header">
+          <div>
+            <span>Nr: {{element.node_id}}</span>
+          </div>
+          {{Icon(element.type)}}
+        </header>
+        <div class="inactive--content">
+          <div>
+            <span>Typ:</span>
+            {% if element.type == "90" %}
+              <span>Temperatur und Feuchtigkeit</span>
+            {% endif %}
+          </div>
 
-      <div>
-        <span>Erstellt:</span>
-        <span>20. Januar 2023</span>
+          <div>
+            <span>Erstellt:</span>
+            <span>20. Januar 2023</span>
+          </div>
+        </div>
+        <form method="POST" action="/nodes/{{element.node_id}}">
+          <input hidden type="text" name="method" value="patch" />
+          <input hidden type="text" name="active" value="1" />
+          <input hidden type="text" name="redirect" value="True" />
+          <button>Hinzufügen</button>
+        </form>
       </div>
-    </div>
-    <form method="POST" action="/nodes/{{element.node_id}}">
-      <input hidden type="text" name="method" value="patch" />
-      <input hidden type="text" name="active" value="1" />
-      <input hidden type="text" name="redirect" value="True" />
-      <button>Hinzufügen</button>
-    </form>
+    {% endfor %}
   </div>
-  {% endfor %}
-</div>
 
-<script>
-  const inactive = document.getElementById("inactive")
-  const event = new EventSource("/nodes/sse");
+  <script>
+    const inactive = document.getElementById("inactive")
+    const event = new EventSource("/nodes/sse");
 
-  event.addEventListener("message", (event) => {
-    const data = JSON.parse(event.data);    
-    if (data.length == 0) return;
+    event.addEventListener("message", (event) => {
+      const data = JSON.parse(event.data);
+      if (data.length == 0) return;
 
-    data.map((element) => {
-      inactive.appendChild(addEvent(element));
+      data.map((element) => {
+        inactive.appendChild(addEvent(element));
+      });
     });
-  });
 
-  const addEvent = (element) => {
-    const div = document.createElement("div");
+    const addEvent = (element) => {
+      const div = document.createElement("div");
 
-    div.innerHTML = `
+      div.innerHTML = `
     <header class="inactive--header">
       <div>
         <span>Nr: ${element.node_id}</span>
@@ -84,7 +84,7 @@
     </form>
     `;
 
-    return div
-  };
-</script>
+      return div
+    };
+  </script>
 {%- endmacro %}

@@ -3,32 +3,32 @@
 {% from "/components/state.html" import State %}
 
 {% macro Table(headings, list, link) -%}
-<div class="table--container">
-  <table class="table" id="table">
-    <thead>
-      <tr>
-        {% for element in headings %}
-        <th>{{element}}</th>
+  <div class="table--container">
+    <table class="table" id="table">
+      <thead>
+        <tr>
+          {% for element in headings %}
+            <th>{{element}}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody id="tbody">
+        {% for element in list %}
+          <tr>
+            {% for key, value in element.items() %}
+              {% if key == "link" %}
+                <td class="link {% if link %} active {% endif %}"><a href="{{value}}"></a></td>
+              {% elif key == "type"%}
+                <td>{{Icon(value)}}</td>
+              {% elif key == "status"%}
+                <td>{{State(value)}}</td>
+              {% else %}
+                <td>{{value}}</td>
+              {% endif %}
+            {% endfor %}
+          </tr>
         {% endfor %}
-      </tr>
-    </thead>
-    <tbody id="tbody">
-      {% for element in list %}
-      <tr>
-      {% for key, value in element.items() %}
-      {% if key == "link" %}
-      <td class="link {% if link %} active {% endif %}"><a href="{{value}}"></a></td>
-      {% elif key == "type"%}
-      <td>{{Icon(value)}}</td>
-      {% elif key == "status"%}
-      <td>{{State(value)}}</td>
-      {% else %}
-        <td>{{value}}</td>
-      {% endif %}
-      {% endfor %} 
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
+      </tbody>
+    </table>
+  </div>
 {%- endmacro %}
