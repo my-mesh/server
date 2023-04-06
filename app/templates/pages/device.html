@@ -1,5 +1,19 @@
-{% from "/components/table.html" import Table %} {% extends "base.html" %} {%
-block title %}Devices{% endblock %} {% block content %}
+{% from "/components/table.html" import Table %} 
+{% from "/components/input.html" import Input %} 
+
+{% extends "base.html" %} {% block title %}Devices{% endblock %} 
+{% block content %}
+<div class="grid">
+  <div class="card">
+    <h2>Info</h2>
+    <form>
+      {{Input("text", "", "", "test", "Name")}}
+    </form>
+  </div>
+  <div class="card">
+    1
+  </div>
+</div>
 <div class="card">
   <h2>Aktuelle Daten</h2>
   {{Table(["ID", "Created", "Type"], nodes, True)}}
@@ -11,7 +25,7 @@ block title %}Devices{% endblock %} {% block content %}
   event.addEventListener("message", (event) => {
     console.log("message")
     const data = JSON.parse(event.data);
-    //if (data.length == 0) return;
+    if (data.length == 0) return;
 
     inactive.appendChild(addEvent());
 

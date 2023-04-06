@@ -23,13 +23,19 @@ def get_see():
 
     @stream_with_context
     def event_stream():
-        now = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
+        now = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
         while True:
-            nodes = select(db, "node", ["node_id", "created", "type"], where="created > ? AND active = 0",args=(now,))
-            
+            nodes = select(
+                db,
+                "node",
+                ["node_id", "created", "type"],
+                where="created > ? AND active = 0",
+                args=(now,),
+            )
+
             if len(nodes) != 0:
-                now = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
-            
+                now = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+
             stream = "data: {}\n\n".format(json.dumps(nodes, default=str))
 
             print("data")

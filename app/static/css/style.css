@@ -100,6 +100,23 @@
   color: var(--gray-2);
 }
 
+.flex {
+  display: flex;
+  gap: var(--size-fluid-2);
+}
+
+.flex[data-direction="column"] {
+  flex-direction: column;
+}
+
+.grid {
+  display: grid;
+  gap: var(--size-fluid-2);
+  --fill: auto-fit;
+  --card-size: 20rem;
+  grid-template-columns: repeat(var(--fill), minmax(min(100%, var(--card-size)), 1fr));
+}
+
 .table--container {
   display: flex;
   flex-direction: column;
@@ -203,7 +220,11 @@
 }
 
 .inactive > div[data-style="90"] {
-  background-image: linear-gradient(240deg, hsla(26, 91%, 45%, 0.15), transparent 70%);
+  background-image: linear-gradient(
+    240deg,
+    hsla(26, 91%, 45%, 0.15),
+    transparent 70%
+  );
 }
 
 .inactive--header {
@@ -260,4 +281,17 @@ button:hover {
 
 .state[data-state="closed"] {
   border-color: var(--red-8);
+}
+
+.input--container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-1);
+}
+
+.input--container input {
+  border-radius: var(--radius-2);
+  padding-inline: var(--size-2);
+  padding-block: var(--size-1);
+  border: var(--border-size-1) solid var(--surface-3);
 }

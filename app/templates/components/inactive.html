@@ -48,6 +48,7 @@
 
     const addEvent = (element) => {
       const div = document.createElement("div");
+      div.setAttribute("data-style", element.type);
 
       div.innerHTML = `
     <header class="inactive--header">
