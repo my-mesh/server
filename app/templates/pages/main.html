@@ -1,9 +1,24 @@
 {% from "/components/table.html" import Table %}
 {% from "/components/inactive.html" import Inactive %}
+{% from "/components/time.html" import Time %}
 
 {% extends "base.html" %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
+  <section class="grid">
+    <div class="card">
+      {{Time()}}
+    </div>
+
+    <div class="card">
+      Temperatur
+    </div>
+
+    <div class="card">
+      Temperatur
+    </div>
+  </section>
+
   <section class="area">
     <h2>Neue Nodes</h2>
     {{Inactive(devices_inactive)}}

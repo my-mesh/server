@@ -34,6 +34,10 @@
   border: 3px solid var(--surface-3);
 }
 
+*[data-aspect="widescreen"] {
+  aspect-ratio: var(--ratio-widescreen);
+}
+
 .body {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -294,4 +298,13 @@ button:hover {
   padding-inline: var(--size-2);
   padding-block: var(--size-1);
   border: var(--border-size-1) solid var(--surface-3);
+}
+
+.time--container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--size-2);
+  font-size: var(--font-size-3);
 }
