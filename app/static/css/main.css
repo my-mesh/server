@@ -1,0 +1,23 @@
+.info {
+    display: grid;
+    grid-template-columns: 0.2fr 0.2fr;
+    gap: var(--size-fluid-3);
+}
+
+.info .card {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    font-size: var(--font-size-4);
+}
+
+.info .card h2 {
+    font-size: var(--font-size-4);
+}
+
+.info .card header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+}

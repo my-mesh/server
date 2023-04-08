@@ -3,19 +3,29 @@
 {% from "/components/time.html" import Time %}
 
 {% extends "base.html" %}
+{% block css %}
+<link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/main.css') }}"
+    />
+{% endblock %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
-  <section class="grid">
-    <div class="card">
+  <section class="info">
+    <div class="card time">
+      <header>
+        <h2>Uhrzeit</h2>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+      </header>
       {{Time()}}
     </div>
 
-    <div class="card">
-      Temperatur
-    </div>
-
-    <div class="card">
-      Temperatur
+    <div class="card active">
+      <header>
+        <h2>Aktive Nodes</h2>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+      </header>
+      <span>{{devices|length}}</span>
     </div>
   </section>
 

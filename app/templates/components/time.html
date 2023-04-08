@@ -5,22 +5,18 @@
         <span id="middle">:</span>
         <span id="minutes"></span>
       </div>
-      <div id="date"></div>
 </div>
 
 <script>
     const time = document.getElementById("time");
     const hours = document.getElementById("hours");
     const minutes = document.getElementById("minutes");
-    const date = document.getElementById("date");
 
     const formatter = new Intl.DateTimeFormat("de", {
         weekday: "long",
         month: "long",
         day: "numeric",
     });
-
-    date.innerHTML = formatter.format(new Date());
 
     const getTime = () => {
         const date = new Date();

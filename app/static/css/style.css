@@ -38,13 +38,17 @@
   aspect-ratio: var(--ratio-widescreen);
 }
 
+h1, h2, h3 {
+  color: var(--text-1);
+}
+
 .body {
   display: grid;
   grid-template-columns: auto 1fr;
 }
 
 .main {
-  padding: var(--size-fluid-3);
+  padding-inline: var(--size-fluid-4);
   padding-block: var(--size-fluid-1);
   display: flex;
   flex-direction: column;
@@ -301,10 +305,10 @@ button:hover {
 }
 
 .time--container {
+  align-self: flex-start;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: var(--size-2);
-  font-size: var(--font-size-3);
 }
