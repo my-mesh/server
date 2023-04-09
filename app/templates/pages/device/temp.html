@@ -1,0 +1,95 @@
+{% from "/components/table.html" import Table %}
+{% from "/components/input.html" import Input %}
+{% from "/components/select.html" import Select %}
+
+{% extends "base.html" %} 
+{% block title %}Devices{% endblock %}
+{% block css %}
+<link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/device.css') }}"
+    />
+{% endblock %}
+{% block content %}
+  <div class="info">
+    <div class="card">
+      <h2>Einstellungen</h2>
+      <form>
+        {{Input("text", "", "", "name", "Name")}}
+        {{Select([{"value": 1, "label": "Offen"}, {"value": 2, "label": "Geschlossen"}], "Status")}}
+        <button>Speichern</button>
+      </form>
+    </div>
+    <div class="flex" data-direction="column">
+      <div class="card">
+        <header>
+          <h2>Temperatur</h2>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-thermometer-sun"><path d="M12 9a4 4 0 0 0-2 7.5"></path><path d="M12 3v2"></path><path d="m6.6 18.4-1.4 1.4"></path><path d="M20 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"></path><path d="M4 13H2"></path><path d="M6.34 7.34 4.93 5.93"></path></svg>
+        </header>
+        <span>25 °C</span>
+      </div>
+      <div class="card">
+        <header>
+          <h2>Feuchtigkeit</h2>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-thermometer-sun"><path d="M12 9a4 4 0 0 0-2 7.5"></path><path d="M12 3v2"></path><path d="m6.6 18.4-1.4 1.4"></path><path d="M20 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"></path><path d="M4 13H2"></path><path d="M6.34 7.34 4.93 5.93"></path></svg>
+        </header>
+        <span>45 %</span>
+      </div>
+    </div>
+    <div class="card">
+      <table class="charts-css line" id="my-chart">
+        <tbody>
+          {% for element in data %}
+            <tr>
+              <td style="--start: 0.1; --size: 0.1">
+                <span class="data">{{element.payload}}</span> 
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card">
+    <h2>Aktuelle Daten</h2>
+    {{Table(["ID", "Created", "Type"], data, True)}}
+  </div>
+  <div class="card">
+    <form method="POST" action="/data">
+      <h2>Data</h2>
+      <input type="text" name="payload" value="4">
+      <input type="text" name="node_id" value="1">
+      <input hidden type="text" name="redirect" value="True">
+      <button>Submit</button>
+    </form>
+  </div>
+  <script>
+    const inactive = document.getElementById("tbody");
+    const event = new EventSource("/data/sse");
+
+    event.addEventListener("message", (event) => {
+      console.log("message")
+      const data = JSON.parse(event.data);
+      if (data.length == 0) return;
+
+      inactive.appendChild(addEvent());
+
+      data.map((element) => {
+        inactive.appendChild(addEvent(element));
+      });
+    });
+
+    const addEvent = (element) => {
+      console.log(1)
+      const object = document.createElement("tr");
+
+      object.innerHTML = `
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+    `;
+
+      return object;
+    };
+  </script>
+{% endblock %}

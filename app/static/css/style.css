@@ -297,6 +297,20 @@ button:hover {
   gap: var(--size-1);
 }
 
+.select--container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-1);
+}
+
+.select--container select {
+  border-radius: var(--radius-2);
+  padding-inline: var(--size-2);
+  padding-block: var(--size-2);
+  border: var(--border-size-1) solid var(--surface-3);
+  background-color: white;
+}
+
 .input--container input {
   border-radius: var(--radius-2);
   padding-inline: var(--size-2);

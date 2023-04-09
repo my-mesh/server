@@ -1,5 +1,5 @@
 {% macro Input(type, value, placeholder, id, label) -%}
-    <div class="input--container">
+    <div class="input--container" data-type="{{type}}">
         <label for="{{id}}">{{label}}</label>
         <input type="{{type}}" value="{{value}}" placeholder="{{placeholder}}" id="{{id}}"/>
     </div>

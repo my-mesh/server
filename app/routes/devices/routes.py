@@ -29,7 +29,7 @@ def index(node_id):
     if len(device) == 0:
         return redirect("/devices")
 
-    nodes = select(
+    data = select(
         db,
         "data",
         ["data_id", "created", "payload"],
@@ -37,10 +37,19 @@ def index(node_id):
         args=(node_id,),
     )
 
+    if device[0]["type"] == "90":
+        return render_template(
+            "/pages/device/temp.html",
+            page="devices",
+            title="Gerät",
+            device=device,
+            data=data
+        )
+
     return render_template(
-        "/pages/device.html",
+        "/pages/device/none.html",
         page="devices",
-        title="Geräte Daten",
+        title="Gerät",
         device=device,
-        nodes=nodes,
+        data=data,
     )
