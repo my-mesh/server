@@ -1,9 +1,9 @@
-{% macro Select(options, label) -%}
+{% macro Select(options, label, name, selected) -%}
     <div class="select--container">
         <label>{{label}}</label>
-        <select>
+        <select name="{{name}}">
             {% for option in options %}
-                <option value="{{option.value}}">{{option.label}}</option>
+                <option {% if selected == option.value %} selected {% endif %} value="{{option.value}}">{{option.label}}</option>
             {% endfor %}
         </select>
     </div>

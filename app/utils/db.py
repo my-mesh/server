@@ -64,9 +64,8 @@ def update(db, table, columns, values, where, args=()):
         args (tuple, optional): arguments for where clause. Defaults to ().
     """
 
-    columns = ", ".join(columns)
-    values = ", ".join(values)
-    query = f"UPDATE {table} SET {columns} = {values} WHERE {where}"
+    set_values = ", ".join(f"{column} = '{value}'" for column, value in zip(columns, values))
+    query = f"UPDATE {table} SET {set_values} WHERE {where}"
 
     print(query)
     db.execute(query, args)

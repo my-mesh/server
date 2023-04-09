@@ -65,10 +65,7 @@ def post_id(id):
     columns = []
     values = []
 
-    print(form.items())
-
     for key, value in form.items():
-        print(key, value)
         if key != "method" and key != "redirect":
             columns.append(key)
             values.append(value)
