@@ -1,7 +1,7 @@
 .info {
     display: grid;
-    grid-template-columns: 0.3fr 0.2fr auto;
-    gap: var(--size-fluid-4);
+    grid-template-columns: 0.3fr 0.1fr 1fr;
+    gap: var(--size-fluid-3);
 }
 
 .info .flex {
@@ -22,6 +22,7 @@
 .info .card header {
     display: flex;
     justify-content: space-between;
+    gap: var(--size-fluid-1);
     align-items: center;
 }
 
