@@ -1,42 +1,42 @@
 {% macro Time() -%}
-<div class="time--container">
-    <div id="time">
-        <span id="hours"></span>
-        <span id="middle">:</span>
-        <span id="minutes"></span>
-      </div>
-</div>
+    <div class="time--container">
+        <div id="time">
+            <span id="hours"></span>
+            <span id="middle">:</span>
+            <span id="minutes"></span>
+        </div>
+    </div>
 
-<script>
-    const time = document.getElementById("time");
-    const hours = document.getElementById("hours");
-    const minutes = document.getElementById("minutes");
+    <script>
+        const time = document.getElementById("time");
+        const hours = document.getElementById("hours");
+        const minutes = document.getElementById("minutes");
 
-    const formatter = new Intl.DateTimeFormat("de", {
-        weekday: "long",
-        month: "long",
-        day: "numeric",
-    });
+        const formatter = new Intl.DateTimeFormat("de", {
+            weekday: "long",
+            month: "long",
+            day: "numeric",
+        });
 
-    const getTime = () => {
-        const date = new Date();
-        const hours = date.getHours().toString().padStart(2, "0");
-        const minutes = date.getMinutes().toString().padStart(2, "0");
+        const getTime = () => {
+            const date = new Date();
+            const hours = date.getHours().toString().padStart(2, "0");
+            const minutes = date.getMinutes().toString().padStart(2, "0");
 
-        return {
-            hours,
-            minutes,
+            return {
+                hours,
+                minutes,
+            };
         };
-    };
 
-    const setTime = () => {
-        const current_time = getTime();
-        hours.innerHTML = current_time.hours;
-        minutes.innerHTML = current_time.minutes;
-    };
+        const setTime = () => {
+            const current_time = getTime();
+            hours.innerHTML = current_time.hours;
+            minutes.innerHTML = current_time.minutes;
+        };
 
-    setTime();
+        setTime();
 
-    setInterval(setTime, 1000);
-</script>
+        setInterval(setTime, 1000);
+    </script>
 {%- endmacro %}

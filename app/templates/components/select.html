@@ -1,10 +1,10 @@
 {% macro Select(options, label) -%}
-<div class="select--container">
-    <label>{{label}}</label>
-    <select>
-        {% for option in options %}
-            <option value="{{option.value}}">{{option.label}}</option>
-        {% endfor %}
-    </select>
-</div>
+    <div class="select--container">
+        <label>{{label}}</label>
+        <select>
+            {% for option in options %}
+                <option value="{{option.value}}">{{option.label}}</option>
+            {% endfor %}
+        </select>
+    </div>
 {%- endmacro %}
