@@ -195,7 +195,7 @@ h1, h2, h3 {
 
 .card > h2,
 .area > h2 {
-  font-size: var(--font-size-4);
+  font-size: var(--font-size-3);
   color: var(--text-1);
 }
 
@@ -203,6 +203,7 @@ h1, h2, h3 {
   background-color: var(--gray-1);
   border-radius: var(--radius-3);
   padding: var(--size-fluid-1);
+  box-shadow: var(--shadow-1);
 }
 
 .inactive {
@@ -227,7 +228,7 @@ h1, h2, h3 {
   background-color: var(--gray-1);
 }
 
-.inactive > div[data-style="90"] {
+*[data-style="90"] {
   background-image: linear-gradient(
     240deg,
     hsla(26, 91%, 45%, 0.15),

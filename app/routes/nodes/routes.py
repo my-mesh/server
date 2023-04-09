@@ -3,9 +3,8 @@ from flask import jsonify, redirect, request, stream_with_context, Response
 import gevent
 from app.routes.nodes import bp
 from app.db import get_db
-from app.utils.db import select
+from app.utils.db import select, insert, update, delete
 import datetime
-from .utils import handle_delete, handle_patch, handle_post
 
 
 @bp.get("/nodes/")
@@ -50,7 +49,7 @@ def post():
     db = get_db()
     form = request.form
 
-    id = handle_post(db, form)
+    id = insert(db, "node", ["type"], [form.get("type")])
 
     if form.get("redirect") == "True":
         return redirect(request.referrer)
@@ -63,10 +62,24 @@ def post_id(id):
     db = get_db()
     form = request.form
 
+    columns = []
+    values = []
+
+    print(form.items())
+
+    for key, value in form.items():
+        print(key, value)
+        if key != "method" and key != "redirect":
+            columns.append(key)
+            values.append(value)
+
+    print(columns)
+    print(values)
+
     if form.get("method") == "patch":
-        handle_patch(db, form, id)
+        update(db, "node", columns, values, "node_id = ?", (id,))
     elif form.get("method") == "delete":
-        handle_delete(db, form, id)
+        delete(db, "node", "node_id = ?", (id,))
 
     if form.get("redirect") == "True":
         return redirect(request.referrer)

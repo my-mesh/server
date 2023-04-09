@@ -13,22 +13,27 @@
 {% block content %}
   <div class="info">
     <div class="card">
-      <h2>Einstellungen</h2>
-      <form>
+      <header>
+        <h2>Einstellungen</h2>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+      </header>
+      {{device}}
+      {{device.id}}
+      <form method="POST" action="/nodes">
         {{Input("text", "", "", "name", "Name")}}
         {{Select([{"value": 1, "label": "Offen"}, {"value": 2, "label": "Geschlossen"}], "Status")}}
         <button>Speichern</button>
       </form>
     </div>
     <div class="flex" data-direction="column">
-      <div class="card">
+      <div class="card" data-style="90">
         <header>
           <h2>Temperatur</h2>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-thermometer-sun"><path d="M12 9a4 4 0 0 0-2 7.5"></path><path d="M12 3v2"></path><path d="m6.6 18.4-1.4 1.4"></path><path d="M20 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"></path><path d="M4 13H2"></path><path d="M6.34 7.34 4.93 5.93"></path></svg>
         </header>
         <span>25 °C</span>
       </div>
-      <div class="card">
+      <div class="card" data-style="90">
         <header>
           <h2>Feuchtigkeit</h2>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-thermometer-sun"><path d="M12 9a4 4 0 0 0-2 7.5"></path><path d="M12 3v2"></path><path d="m6.6 18.4-1.4 1.4"></path><path d="M20 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"></path><path d="M4 13H2"></path><path d="M6.34 7.34 4.93 5.93"></path></svg>
@@ -53,15 +58,6 @@
   <div class="card">
     <h2>Aktuelle Daten</h2>
     {{Table(["ID", "Created", "Type"], data, True)}}
-  </div>
-  <div class="card">
-    <form method="POST" action="/data">
-      <h2>Data</h2>
-      <input type="text" name="payload" value="4">
-      <input type="text" name="node_id" value="1">
-      <input hidden type="text" name="redirect" value="True">
-      <button>Submit</button>
-    </form>
   </div>
   <script>
     const inactive = document.getElementById("tbody");

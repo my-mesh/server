@@ -30,3 +30,52 @@ def select(db, table, columns, where=None, order_by=None, limit=None, args=()):
     rows = [dict(row) for row in rows]
 
     return rows
+
+def insert(db, table, columns, values):
+    """Insert a row into a table and get the id.
+
+    Args:
+        db (sqlite3.Connection): database connection
+        table (str): table name
+        columns (list): list of columns to insert
+        values (list): list of values to insert
+
+    Returns:
+        int: id of inserted row
+    """
+    columns = ", ".join(columns)
+    values = ", ".join(["?"] * len(values))
+    query = f"INSERT INTO {table} ({columns}) VALUES ({values})"
+
+    db.execute(query, values)
+    db.commit()
+
+    return db.execute("SELECT last_insert_rowid()").fetchone()[0]
+
+def update(db, table, columns, values, where, args=()):
+    """Update a row in a table.
+
+    Args:
+        db (sqlite3.Connection): database connection
+        table (str): table name
+        columns (list): list of columns to update
+        values (list): list of values to update
+        where (str): where clause
+        args (tuple, optional): arguments for where clause. Defaults to ().
+    """
+
+    columns = ", ".join(columns)
+    values = ", ".join(values)
+    query = f"UPDATE {table} SET {columns} = {values} WHERE {where}"
+
+    print(query)
+    db.execute(query, args)
+    db.commit()
+
+
+def delete(db, table, where, args=()):
+
+    query = f"DELETE FROM {table} WHERE {where}"
+
+    db.execute(query, args)
+    db.commit()

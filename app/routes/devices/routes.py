@@ -8,7 +8,9 @@ from app.utils.db import select
 def get_devices():
     db = get_db()
 
-    devices = select(db, "node", ["node_id", "created", "type"])
+    devices = select(
+        db, "node", ["node_id", "created", "type", "state"], where="active = 1"
+    )
 
     for element in devices:
         element["link"] = f"/devices/{element['node_id']}"
@@ -23,7 +25,7 @@ def index(node_id):
     db = get_db()
 
     device = select(
-        db, "node", ["node_id", "created", "type"], where="node_id = ?", args=(node_id,)
+        db, "node", ["node_id", "created", "type", "name"], where="node_id = ?", args=(node_id,)
     )
 
     if len(device) == 0:
@@ -42,14 +44,14 @@ def index(node_id):
             "/pages/device/temp.html",
             page="devices",
             title="Gerät",
-            device=device,
-            data=data
+            device=device[0],
+            data=data,
         )
 
     return render_template(
         "/pages/device/none.html",
         page="devices",
         title="Gerät",
-        device=device,
+        device=device[0],
         data=data,
     )

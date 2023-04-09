@@ -14,9 +14,11 @@
   <div class="info">
     <div class="card">
       <h2>Einstellungen</h2>
-      <form>
-        {{Input("text", "", "", "name", "Name")}}
+      <form method="POST" action="/nodes/{{device.node_id}}">
+        <input type="text" name="name" value="{{device.name}}"/>
         {{Select([{"value": 1, "label": "Offen"}, {"value": 2, "label": "Geschlossen"}], "Status")}}
+        <input hidden type="text" name="method" value="patch" />
+        <input hidden type="text" name="redirect" value="True" />
         <button>Speichern</button>
       </form>
     </div>
