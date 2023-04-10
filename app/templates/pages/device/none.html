@@ -29,14 +29,11 @@
   </div>
   <script>
     const inactive = document.getElementById("tbody");
-    const event = new EventSource("/data/sse");
+    const event = new EventSource("/data/sse?node_id={{device.node_id}}");
 
     event.addEventListener("message", (event) => {
-      console.log("message")
       const data = JSON.parse(event.data);
       if (data.length == 0) return;
-
-      inactive.appendChild(addEvent());
 
       data.map((element) => {
         inactive.appendChild(addEvent(element));
@@ -44,13 +41,12 @@
     });
 
     const addEvent = (element) => {
-      console.log(1)
       const object = document.createElement("tr");
 
       object.innerHTML = `
-        <td>1</td>
-        <td>2</td>
-        <td>3</td>
+        <td>${element.data_id}</td>
+        <td>${element.created}</td>
+        <td>${element.payload}</td>
     `;
 
       return object;

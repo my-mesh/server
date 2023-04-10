@@ -16,12 +16,16 @@ def index():
 @bp.get("/data/sse")
 def get_sse():
     db = get_db()
+    args = request.args
+    args_dict = args.to_dict()
 
     @stream_with_context
     def event_stream():
+        node_id = args_dict["node_id"]
+        print(node_id)
         now = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
         while True:
-            nodes = select(db, "data", ["payload"], where="created > ? AND node_id = 0",args=(now,))
+            nodes = select(db, "data", ["payload", "data_id", "created"], where="created > ? AND node_id = ?",args=(now, node_id))
             
             if len(nodes) != 0:
                 now = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
