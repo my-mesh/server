@@ -5,6 +5,7 @@ import datetime
 import gevent
 from app.utils.db import select
 
+
 @bp.get("/data")
 def index():
     db = get_db()
@@ -12,6 +13,7 @@ def index():
     data = select(db, "data", ["data_id", "created", "payload", "node_id"])
 
     return jsonify(data)
+
 
 @bp.get("/data/sse")
 def get_sse():
@@ -23,13 +25,19 @@ def get_sse():
     def event_stream():
         node_id = args_dict["node_id"]
         print(node_id)
-        now = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
+        now = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
         while True:
-            nodes = select(db, "data", ["payload", "data_id", "created"], where="created > ? AND node_id = ?",args=(now, node_id))
-            
+            nodes = select(
+                db,
+                "data",
+                ["payload", "data_id", "created"],
+                where="created > ? AND node_id = ?",
+                args=(now, node_id),
+            )
+
             if len(nodes) != 0:
-                now = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
-            
+                now = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+
             stream = "data: {}\n\n".format(json.dumps(nodes, default=str))
 
             print("data")

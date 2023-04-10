@@ -31,6 +31,7 @@ def select(db, table, columns, where=None, order_by=None, limit=None, args=()):
 
     return rows
 
+
 def insert(db, table, columns, values):
     """Insert a row into a table and get the id.
 
@@ -54,6 +55,7 @@ def insert(db, table, columns, values):
 
     return db.execute("SELECT last_insert_rowid()").fetchone()[0]
 
+
 def update(db, table, columns, values, where, args=()):
     """Update a row in a table.
 
@@ -66,7 +68,9 @@ def update(db, table, columns, values, where, args=()):
         args (tuple, optional): arguments for where clause. Defaults to ().
     """
 
-    set_values = ", ".join(f"{column} = '{value}'" for column, value in zip(columns, values))
+    set_values = ", ".join(
+        f"{column} = '{value}'" for column, value in zip(columns, values)
+    )
     query = f"UPDATE {table} SET {set_values} WHERE {where}"
 
     db.execute(query, args)
@@ -74,7 +78,6 @@ def update(db, table, columns, values, where, args=()):
 
 
 def delete(db, table, where, args=()):
-
     query = f"DELETE FROM {table} WHERE {where}"
 
     db.execute(query, args)

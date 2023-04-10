@@ -77,7 +77,7 @@ def post_id(id):
         if key != "method" and key != "redirect":
             columns.append(key)
             values.append(value)
-            
+
     if form.get("method") == "patch":
         update(db, "node", columns, values, "node_id = ?", (id,))
     elif form.get("method") == "delete":

@@ -25,7 +25,11 @@ def index(node_id):
     db = get_db()
 
     device = select(
-        db, "node", ["node_id", "created", "type", "name", "state"], where="node_id = ?", args=(node_id,)
+        db,
+        "node",
+        ["node_id", "created", "type", "name", "state"],
+        where="node_id = ?",
+        args=(node_id,),
     )
 
     if len(device) == 0:
