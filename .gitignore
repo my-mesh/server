@@ -129,3 +129,5 @@ dmypy.json
 .pyre/
 
 dhcplist.txt
+
+.ruff_cache
