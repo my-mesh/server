@@ -6,6 +6,7 @@ from app.routes.nodes import bp as node_bp
 from app.routes.devices import bp as devices_bp
 from app.routes.data import bp as data_bp
 from app.routes.info import bp as info_bp
+from app.routes.screens import bp as screens_bp
 
 from app import db
 
@@ -38,5 +39,6 @@ def create_app(test_config=None):
     app.register_blueprint(data_bp)
     app.register_blueprint(devices_bp)
     app.register_blueprint(info_bp)
+    app.register_blueprint(screens_bp)
 
     return app
