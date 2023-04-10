@@ -49,7 +49,15 @@ def post():
     db = get_db()
     form = request.form
 
-    id = insert(db, "node", ["type"], [form.get("type")])
+    columns = []
+    values = []
+
+    for key, value in form.items():
+        if key != "method" and key != "redirect":
+            columns.append(key)
+            values.append(value)
+
+    id = insert(db, "node", columns, values)
 
     if form.get("redirect") == "True":
         return redirect(request.referrer)
@@ -69,10 +77,7 @@ def post_id(id):
         if key != "method" and key != "redirect":
             columns.append(key)
             values.append(value)
-
-    print(columns)
-    print(values)
-
+            
     if form.get("method") == "patch":
         update(db, "node", columns, values, "node_id = ?", (id,))
     elif form.get("method") == "delete":

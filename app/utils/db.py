@@ -44,8 +44,10 @@ def insert(db, table, columns, values):
         int: id of inserted row
     """
     columns = ", ".join(columns)
-    values = ", ".join(["?"] * len(values))
-    query = f"INSERT INTO {table} ({columns}) VALUES ({values})"
+    values_temp = ", ".join(["?"] * len(values))
+    query = f"INSERT INTO {table} ({columns}) VALUES ({values_temp})"
+
+    print(query)
 
     db.execute(query, values)
     db.commit()
@@ -67,7 +69,6 @@ def update(db, table, columns, values, where, args=()):
     set_values = ", ".join(f"{column} = '{value}'" for column, value in zip(columns, values))
     query = f"UPDATE {table} SET {set_values} WHERE {where}"
 
-    print(query)
     db.execute(query, args)
     db.commit()
 
