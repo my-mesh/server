@@ -292,6 +292,10 @@ button:hover {
   border-color: var(--red-8);
 }
 
+.state[data-state="open"] {
+  border-color: var(--green-8);
+}
+
 .input--container {
   display: flex;
   flex-direction: column;
