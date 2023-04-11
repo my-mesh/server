@@ -48,8 +48,6 @@ def insert(db, table, columns, values):
     values_temp = ", ".join(["?"] * len(values))
     query = f"INSERT INTO {table} ({columns}) VALUES ({values_temp})"
 
-    print(query)
-
     db.execute(query, values)
     db.commit()
 
