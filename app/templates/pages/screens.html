@@ -6,9 +6,15 @@
 {% block title %}Infos{% endblock %}
 {% block content %}
 <div class="grid">
-    <div>
-        <h1>1</h1>
-        <button>Auswählen</button>
+    {% for screen in screens %}
+    <div class="card" data-active="{{screen.active}}">
+        <h1>{{ screen.name }}</h1>
+        <form method="POST" action="/screens">
+            <input type="text" name="redirect" value="True" hidden>
+            <input type="text" name="screens_id" value="{{ screen.screens_id }}" hidden>
+            <button>Auswählen</button>
+        </form>
     </div>
+    {% endfor %}
 </div>
 {% endblock %}

@@ -56,7 +56,7 @@ def insert(db, table, columns, values):
     return db.execute("SELECT last_insert_rowid()").fetchone()[0]
 
 
-def update(db, table, columns, values, where, args=()):
+def update(db, table, columns, values, where=None, args=()):
     """Update a row in a table.
 
     Args:
@@ -71,7 +71,10 @@ def update(db, table, columns, values, where, args=()):
     set_values = ", ".join(
         f"{column} = '{value}'" for column, value in zip(columns, values)
     )
-    query = f"UPDATE {table} SET {set_values} WHERE {where}"
+    query = f"UPDATE {table} SET {set_values}"
+
+    if where:
+        query += f" WHERE {where}"
 
     db.execute(query, args)
     db.commit()

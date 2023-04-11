@@ -79,7 +79,7 @@ def post_id(id):
             values.append(value)
 
     if form.get("method") == "patch":
-        update(db, "node", columns, values, "node_id = ?", (id,))
+        update(db, "node", columns, values, where="node_id = ?", args=(id,))
     elif form.get("method") == "delete":
         delete(db, "node", "node_id = ?", (id,))
 

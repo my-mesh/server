@@ -30,7 +30,8 @@ CREATE TABLE data (
 CREATE TABLE screens (
   screens_id INTEGER PRIMARY KEY AUTOINCREMENT,
   created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  type INTEGER NOT NULL,
   name TEXT,
-  node_id INTEGER NOT NULL
+  active INTEGER DEFAULT 0
 );
+
+INSERT INTO screens (name, active) VALUES ('Timer', 1), ('Date', 0), ('Empty', 0);

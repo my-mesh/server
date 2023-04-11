@@ -331,3 +331,7 @@ button:hover {
   justify-content: center;
   gap: var(--size-2);
 }
+
+*[data-active="1"] {
+  border: var(--border-size-2) solid var(--green-8);
+}
