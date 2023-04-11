@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Info</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      * {
+        margin: 0;
+      }
+
+      :where(html) {
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu,
+                     Cantarell;
+      }
+
+      main {
+        display: grid;
+        place-items: center;
+        place-content: center;
+        height: 100vh;
+        background: linear-gradient(45deg, rgba(12,48,66,1) 0%, rgba(22,22,22,1) 27%, rgba(38,50,71,1) 56%, rgba(34,25,56,1) 100%);
+        background-size: 400% 400%;
+        animation: gradient 30s ease infinite;
+      }
+
+      @keyframes gradient {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      #date {
+        font-size: 3rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        color: #adb5bd;
+      }
+    </style>
+  </head>
+  <body class="body">
+    <main class="main">
+      <div id="date"></div>
+    </main>
+    <script>
+      const date = document.getElementById("date");
+
+      const formatter = new Intl.DateTimeFormat("de", {
+        month: "long",
+        day: "numeric",
+      });
+
+      date.innerHTML = formatter.format(new Date());
+    </script>
+  </body>
+</html>
