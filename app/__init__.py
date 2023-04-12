@@ -7,10 +7,12 @@ from app.routes.devices import bp as devices_bp
 from app.routes.data import bp as data_bp
 from app.routes.info import bp as info_bp
 from app.routes.screens import bp as screens_bp
-from app.routes.neo import bp as neo_bp
+from app.routes.led import bp as led_bp
 
 from app import db
 
+import board
+import neopixel
 
 def create_app(test_config=None):
     # create and configure the app
@@ -41,6 +43,10 @@ def create_app(test_config=None):
     app.register_blueprint(devices_bp)
     app.register_blueprint(info_bp)
     app.register_blueprint(screens_bp)
-    app.register_blueprint(neo_bp)
+    app.register_blueprint(led_bp)
+
+    pixels = neopixel.NeoPixel(board.D12, 24, brightness=0.1, auto_write=False)
+    pixels.fill((255,0,0))
+    pixels.show()
 
     return app
